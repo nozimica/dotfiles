@@ -1,0 +1,89 @@
+set prompt = "[%n@%m:%~/]% "
+
+set history=150
+set autologout
+set echo_style both
+limit coredumpsize 0k
+limit core 0k
+set correct=''
+set inputmode
+set listlinks
+set matchbeep
+set autolist
+# set ignoreeof
+bindkey -v
+
+setenv TEXLIVE_HOME $HOME/opt/TexLive
+setenv PATH /opt/jdk/bin:$PATH
+setenv PATH $HOME/bin:$PATH
+setenv PATH /sbin:$PATH
+setenv PATH $TEXLIVE_HOME/bin/x86_64-linux:$PATH
+setenv PATH $HOME/usr/bin:$PATH
+setenv MANPATH /usr/share/man:/usr/local/man:/usr/local/share/man:$TEXLIVE_HOME/texmf/doc/man
+#setenv INFOPATH $TEXLIVE_HOME/texmf/doc/info:$INFOPATH
+setenv PDFVIEWER_texdoc qpdfview
+
+# GEMS
+setenv PATH $HOME/.gem/ruby/1.9.1/bin:$PATH
+
+alias ?		history
+alias ls	'ls -lF'
+alias rm    'rm -i'
+alias cp    'cp -i'
+alias mv    'mv -i'
+alias m     more
+alias w		'w | more'
+alias cd    'cd \!*;echo $cwd'
+alias pwd   'echo $cwd'
+alias who   'who | sort | more'
+alias wget2	'wget -r -nH --cut-dirs=1 -b -t 0 -c -i'
+alias wgetcompl 'wget -E -H -k -K -p -nH'
+alias l         'ls -l --color | more'
+alias lt        'ls -lt --color | more'
+alias lat        'ls -lat --color | more'
+alias lsz	'ls -la | sort -k 5 -nr | more'
+alias lsnoz	'ls -la | sort -k 3 | grep nozimica'
+alias d         'ls -lA --color | more'
+alias dl        'ls -lA --color --group-directories-first | more'
+alias ll        'ls | more'
+alias c         'clear'
+alias ddd       'ls | more'
+alias bello     'telnet Biblios.dic.uchile.cl'
+alias duk       'du -k | sort -nr | more'
+alias mp3p	'rm -f /tmp/mplayerfifo; mkfifo /tmp/mplayerfifo; mplayer -input file=/tmp/mplayerfifo *.mp3'
+alias infomp3	'mp3info -x -r a *.mp3'
+alias dt	'ls -lt | more'
+alias lspdf	'ls *.pdf | more'
+alias psnoz	'ps -U nozimica'
+alias tmp	'cd /tmp'
+alias ntmp	'cd /tmp/noz'
+alias vtmp	'cd /var/tmp'
+alias dukk	'dukk | more'
+
+alias monitoresOficina 'xrandr --output LVDS --mode 1280x800 --output VGA --mode 1440x900 --right-of LVDS'
+
+alias ipp '/sbin/ifconfig | grep -e "inet:" -e "addr:" | grep -v "inet6" | grep -v "127.0.0.1" | head -n 1 | awk '"'"'{print $2}'"'"' | cut -c6-'
+
+alias dreamhost 'ssh neozimica@scheddi.dreamhost.com'
+alias eapps_old 'ssh nozimica@216.154.219.231'
+alias eapps1 'ssh nozimica@68.169.58.15'
+alias eapps2 'ssh nozimica@68.169.60.64'
+#alias gandi 'ssh admin@92.243.23.74'
+alias gandi 'ssh admin@92.243.11.151'
+
+alias removeSpaces "rename -v 's/\ /\_/g' *"
+
+# http://unix.stackexchange.com/q/32017/6803
+#source ~/.complete.tcsh
+
+alias iceweaselProtected iceweasel -ProfileManager -no-remote
+
+alias freemem 'ps -e -orss=,args= | sort -b -k1,1n'
+alias xtxt 'xterm -geometry 116x66+1000+0 & ; xterm -geometry 116x66+2000+0 &;'
+alias gcal 'gcal -s 1'
+
+switch ($TERM)
+    case "xterm*":
+        alias precmd 'echo -n "\033]0;${HOST}:$cwd\007"'
+        breaksw
+endsw
