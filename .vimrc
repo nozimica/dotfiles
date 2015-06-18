@@ -25,7 +25,7 @@ let javaScript_folding=1
 set nohlsearch
 " tip 15
 set laststatus=2
-set statusline=%<%f%h%m%r%=%b\ 0x%B\ \ %l,%c%V\ %P
+
 " tip 22
 command! Q  quit
 command! W  write
