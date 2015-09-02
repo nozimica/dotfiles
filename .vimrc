@@ -3,9 +3,9 @@ set showmatch
 set ts=4
 set shiftwidth=4
 set expandtab
-set foldmethod=syntax
-let php_folding=1
-let javaScript_folding=1
+" pathogen
+execute pathogen#infect()
+
 syntax on
 set autoindent
 set smartindent
@@ -15,7 +15,11 @@ let loaded_matchparen = 1
 set encoding=utf8
 set fileencoding=utf8
 filetype on
-filetype plugin on
+filetype plugin indent on
+
+set foldmethod=syntax
+let php_folding=1
+let javaScript_folding=1
 
 "tip 14
 set nohlsearch
