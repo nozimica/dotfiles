@@ -8,14 +8,15 @@ execute pathogen#infect()
 
 syntax on
 set autoindent
-set smartindent
+" set smartindent
+filetype on
+filetype plugin indent on
+" set cindent
 set mouse=a
 "set ttymouse=xterm2
 let loaded_matchparen = 1
 set encoding=utf8
 set fileencoding=utf8
-filetype on
-filetype plugin indent on
 
 set foldmethod=syntax
 let php_folding=1
