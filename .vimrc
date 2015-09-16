@@ -138,6 +138,8 @@ vnoremap <A-j> :m'>+<CR>gv=gv
 vnoremap <A-k> :m-2<CR>gv=gv
 vnoremap <A-h> <gv
 vnoremap <A-l> >gv
+vnoremap <A-S-l> xp`[v`]
+vnoremap <A-S-h> xhhp`[v`]
 
 " start scrolling when within 5 lines near the top/bottom
 set scrolloff=5
