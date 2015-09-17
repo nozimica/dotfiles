@@ -138,6 +138,10 @@ vnoremap <A-j> :m'>+<CR>gv=gv
 vnoremap <A-k> :m-2<CR>gv=gv
 vnoremap <A-h> <gv
 vnoremap <A-l> >gv
+nnoremap <A-S-l> viwxp`[v`]
+nnoremap <A-S-h> viwxhhp`[v`]
+inoremap <A-S-l> <Esc>viwxp`[v`]
+inoremap <A-S-h> <Esc>viwxhhp`[v`]
 vnoremap <A-S-l> xp`[v`]
 vnoremap <A-S-h> xhhp`[v`]
 
