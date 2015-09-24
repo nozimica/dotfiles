@@ -23,7 +23,7 @@ setenv MANPATH /usr/share/man:/usr/local/man:/usr/local/share/man:$TEXLIVE_HOME/
 setenv PDFVIEWER_texdoc qpdfview
 
 # GEMS
-if ( -d $HOME/.gem/ruby/1.9.1) then
+if ( -d $HOME/.gem/ruby/1.9.1 ) then
     setenv PATH $HOME/.gem/ruby/1.9.1/bin:$PATH
 endif
 
@@ -86,4 +86,6 @@ setenv LD_LIBRARY_PATH $HOME/opt/postgres-xl/lib:$HOME/opt/postgresql/lib
 setenv PATH $HOME/opt/postgresql/bin:$PATH
 #setenv PATH $HOME/opt/postgres-xl/bin:$HOME/opt/postgresql/bin:$PATH
 
-alias intoelefante 'ssh `curl -s http://68.169.58.15/elefante.txt`'
+if ( -f $HOME/.aliases ) then
+    source $HOME/.aliases
+endif
