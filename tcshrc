@@ -23,7 +23,9 @@ setenv MANPATH /usr/share/man:/usr/local/man:/usr/local/share/man:$TEXLIVE_HOME/
 setenv PDFVIEWER_texdoc qpdfview
 
 # GEMS
-setenv PATH $HOME/.gem/ruby/1.9.1/bin:$PATH
+if ( -d $HOME/.gem/ruby/1.9.1) then
+    setenv PATH $HOME/.gem/ruby/1.9.1/bin:$PATH
+endif
 
 alias ?		history
 alias ls	'ls -lF'
@@ -55,8 +57,6 @@ alias dt	'ls -lt | more'
 alias lspdf	'ls *.pdf | more'
 alias psnoz	'ps -U nozimica'
 alias tmp	'cd /tmp'
-
-# alias monitoresOficina 'xrandr --output LVDS --mode 1280x800 --output VGA --mode 1440x900 --right-of LVDS'
 alias vtmp	'cd /var/tmp'
 alias dukk	'dukk | more'
 
@@ -65,7 +65,7 @@ alias ipp '/sbin/ifconfig | grep -e "inet:" -e "addr:" | grep -v "inet6" | grep 
 alias removeSpaces "rename -v 's/\ /\_/g' *"
 
 # http://unix.stackexchange.com/q/32017/6803
-#source ~/.complete.tcsh
+source ~/.complete.tcsh
 
 alias iceweaselProtected iceweasel -ProfileManager -no-remote
 alias xtxt 'xterm -geometry 116x66+1000+0 & ; xterm -geometry 116x66+2000+0 &;'
@@ -77,3 +77,13 @@ switch ($TERM)
         alias precmd 'echo -n "\033]0;${HOST}:$cwd\007"'
         breaksw
 endsw
+
+setenv LC_TIME "es_CL.UTF-8"
+setenv LC_PAPER "es_CL.UTF-8"
+setenv LC_MEASUREMENT "es_CL.UTF-8"
+
+setenv LD_LIBRARY_PATH $HOME/opt/postgres-xl/lib:$HOME/opt/postgresql/lib
+setenv PATH $HOME/opt/postgresql/bin:$PATH
+#setenv PATH $HOME/opt/postgres-xl/bin:$HOME/opt/postgresql/bin:$PATH
+
+alias intoelefante 'ssh `curl -s http://68.169.58.15/elefante.txt`'
