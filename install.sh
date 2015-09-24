@@ -51,8 +51,8 @@ backup_and_link () {
         mv $currentFile $BACKUP_FOLDER
     fi
 
-    echo "Copying new $currentFile."
-    cp $newFile $currentFile
+    echo "Creating new $currentFile as a link."
+    ln -s $DOTFILES_DIR/$newFile $currentFile
 
     echo ""
 }
