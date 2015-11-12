@@ -1,2 +1,2 @@
-My public dotfiles.
+Public dotfiles.
 =======
