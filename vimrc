@@ -78,18 +78,6 @@ endfunction
 "endfunction
 "inoremap <Tab> <C-R>=CleverTab()<CR>
 
-" , #perl # comments
-map ,, :s/^/#/<CR>
-
-" ,/ C/C++/C#/Java // comments
-map ,/ :s/^/\/\//<CR>
-
-" ,< HTML comment
-map ,< :s/^\(.*\)$/<!-- \1 -->/<CR><Esc>:nohlsearch<CR>
-
-" c++ java style comments
-map ,* :s/^\(.*\)$/\/\* \1 \*\//<CR><Esc>:nohlsearch<CR>
-
 " tip 64
 map ,cd :cd %:p:h<CR>
 
@@ -150,3 +138,9 @@ set scrolloff=5
 
 " allow freeform selection (i.e. ignoring line endings) in visual block mode
 set virtualedit+=block
+
+" https://robots.thoughtbot.com/vim-splits-move-faster-and-more-naturally
+nnoremap <C-J> <C-W><C-J>
+nnoremap <C-K> <C-W><C-K>
+nnoremap <C-L> <C-W><C-L>
+nnoremap <C-H> <C-W><C-H>
