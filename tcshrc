@@ -14,15 +14,14 @@ set autolist
 bindkey -v
 
 setenv TEXLIVE_HOME $HOME/opt/TexLive
-setenv PATH /opt/jdk/bin:$PATH
 setenv PATH $HOME/bin:$PATH
 setenv PATH $TEXLIVE_HOME/bin/x86_64-linux:$PATH
 setenv PATH $HOME/usr/bin:$PATH
 setenv PATH $HOME/.local/bin:$PATH
+setenv PATH $HOME/opt/jdk/bin:$PATH
 setenv MANPATH /usr/share/man:/usr/local/man:/usr/local/share/man:$TEXLIVE_HOME/texmf/doc/man
 #setenv INFOPATH $TEXLIVE_HOME/texmf/doc/info:$INFOPATH
 setenv PDFVIEWER_texdoc evince
-setenv PATH $HOME/opt/jdk/bin:$PATH
 
 # GEMS
 if ( -d $HOME/.gem/ruby/1.9.1 ) then
