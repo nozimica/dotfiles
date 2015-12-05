@@ -145,3 +145,9 @@ nnoremap <C-J> <C-W><C-J>
 nnoremap <C-K> <C-W><C-K>
 nnoremap <C-L> <C-W><C-L>
 nnoremap <C-H> <C-W><C-H>
+
+if has('gui_running')
+    set guioptions-=T
+    colorscheme desert
+    set guifont=DejaVu\ Sans\ Mono\ 8
+endif
