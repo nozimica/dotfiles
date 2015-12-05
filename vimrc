@@ -42,6 +42,7 @@ else
     map ,e :e <C-R>=expand("%:p:h") . "\" <CR>
 endif
 
+set pastetoggle=<F9>
 map <F3> :tabe<CR>:Project<CR>
 map <F4> :Project<CR>
 map <F10> :!make<CR>
