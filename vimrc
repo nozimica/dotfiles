@@ -151,7 +151,7 @@ if has('gui_running')
     colorscheme desert
     if has("gui_gtk2")
         " set guifont=DejaVu\ Sans\ Mono\ 8
-        set guifont=Inconsolata\ 12
+        set guifont=Inconsolata\ Medium\ 10
     elseif has("gui_win32")
         set guifont=Consolas:h8:cANSI
     endif
