@@ -149,5 +149,10 @@ nnoremap <C-H> <C-W><C-H>
 if has('gui_running')
     set guioptions-=T
     colorscheme desert
-    set guifont=DejaVu\ Sans\ Mono\ 8
+    if has("gui_gtk2")
+        " set guifont=DejaVu\ Sans\ Mono\ 8
+        set guifont=Inconsolata\ 12
+    elseif has("gui_win32")
+        set guifont=Consolas:h8:cANSI
+    endif
 endif
