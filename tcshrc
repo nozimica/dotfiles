@@ -79,9 +79,9 @@ switch ($TERM)
         breaksw
 endsw
 
-setenv LC_TIME "es_CL.UTF-8"
-setenv LC_PAPER "es_CL.UTF-8"
-setenv LC_MEASUREMENT "es_CL.UTF-8"
+# setenv LC_TIME "es_CL.UTF-8"
+# setenv LC_PAPER "es_CL.UTF-8"
+# setenv LC_MEASUREMENT "es_CL.UTF-8"
 
 setenv LD_LIBRARY_PATH $HOME/opt/postgres-xl/lib:$HOME/opt/postgresql/lib
 setenv PATH $HOME/opt/postgresql/bin:$PATH

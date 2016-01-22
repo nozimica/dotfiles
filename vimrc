@@ -18,7 +18,7 @@ let loaded_matchparen = 1
 set encoding=utf8
 set fileencoding=utf8
 
-set foldmethod=syntax
+" set foldmethod=syntax
 let php_folding=1
 let javaScript_folding=1
 
@@ -68,7 +68,7 @@ function InsertTabWrapper()
         return "\<c-p>"
     endif
 endfunction
-" inoremap <tab> <c-r>=InsertTabWrapper()<cr>
+inoremap <tab> <c-r>=InsertTabWrapper()<cr>
 
 
 "function! CleverTab()
