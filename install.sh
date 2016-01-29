@@ -23,38 +23,53 @@ dfiles=(\
     vimrc \
     tcshrc \
     complete.tcsh \
+    Xresources \
+)
+
+# List of commands for each file
+declare -A commfiles=(\
+    ["Xresources"]="xrdb -merge ~/.Xresources" \
 )
 
 install_links () {
     for file in "${dfiles[@]}"
     do
+        print_title "$file"
         backup_and_link "$file"
     done
     pack_backup_folder
+    echo ""
 }
 
 backup_and_link () {
-    local newFile=$1
+    local thisFile=$1
     local currentFile
     currentFile="$HOME/.$1"
 
     cd $DOTFILES_DIR
 
     # Check if source dotfile exists
-    if [[ ! -e "$newFile" ]]; then
-        echo "Error: $newFile doesn't exist."
+    if [[ ! -e "$thisFile" ]]; then
+        echo "Error: $thisFile doesn't exist."
         return
     fi
 
-    echo "Backing up $currentFile."
     if [[ -e "$currentFile" ]] && [[ ! -L "$currentFile" ]]; then
+        echo "Backing up $currentFile."
         mv $currentFile $BACKUP_FOLDER
+        echo "Creating new $currentFile as a link."
+        ln -s $DOTFILES_DIR/$thisFile $currentFile
+    else
+        echo "Link for $currentFile already exists."
     fi
 
-    echo "Creating new $currentFile as a link."
-    ln -s $DOTFILES_DIR/$newFile $currentFile
-
     echo ""
+
+    if [[ ${commfiles["$thisFile"]} ]]; then
+        echo "Executing post command for $currentFile:"
+        echo "    ${commfiles[""$thisFile""]}"
+        eval ${commfiles["$thisFile"]}
+    fi
 }
 
 pack_backup_folder () {
@@ -77,6 +92,12 @@ check_scenario () {
 print_error_msg () {
     echo ""
     echo " *** ERROR: $1"
+    echo ""
+}
+
+print_title () {
+    echo "############################################################"
+    echo "#   File: $1"
     echo ""
 }
 
