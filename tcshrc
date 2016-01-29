@@ -26,6 +26,7 @@ setenv PDFVIEWER_texdoc evince
 if ( -d $HOME/.gem/ruby/1.9.1 ) then
     setenv PATH $HOME/.gem/ruby/1.9.1/bin:$PATH
 endif
+# JDK
 if ( -d $HOME/opt/jdk ) then
     setenv JAVA_HOME $HOME/opt/jdk
     setenv PATH $JAVA_HOME/bin:$PATH
@@ -34,6 +35,10 @@ if ( -d $HOME/opt/jdk ) then
     else
         setenv LD_LIBRARY_PATH $JAVA_HOME/jre/lib/amd64/server:$LD_LIBRARY_PATH
     endif
+endif
+# Cabal
+if ( -d $HOME/.cabal ) then
+    setenv PATH $HOME/.cabal/bin:$PATH
 endif
 
 alias ?		history
