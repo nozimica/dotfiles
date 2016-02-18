@@ -54,9 +54,11 @@ backup_and_link () {
         return
     fi
 
-    if [[ -e "$currentFile" ]] && [[ ! -L "$currentFile" ]]; then
-        echo "Backing up $currentFile."
-        mv $currentFile $BACKUP_FOLDER
+    if [[ ! -e "$currentFile" ]] || [[ -e "$currentFile" ]] && [[ ! -L "$currentFile" ]]; then
+        if [[ -e "$currentFile" ]] && [[ ! -L "$currentFile" ]]; then
+            echo "Backing up $currentFile."
+            mv $currentFile $BACKUP_FOLDER
+        fi
         echo "Creating new $currentFile as a link."
         ln -s $DOTFILES_DIR/$thisFile $currentFile
     else
