@@ -18,10 +18,16 @@ setenv PATH $HOME/bin:$PATH
 setenv PATH $TEXLIVE_HOME/bin/x86_64-linux:$PATH
 setenv PATH $HOME/usr/bin:$PATH
 setenv PATH $HOME/.local/bin:$PATH
-setenv PATH $HOME/opt/jdk/bin:$PATH
 setenv MANPATH /usr/share/man:/usr/local/man:/usr/local/share/man:$TEXLIVE_HOME/texmf/doc/man
 #setenv INFOPATH $TEXLIVE_HOME/texmf/doc/info:$INFOPATH
 setenv PDFVIEWER_texdoc evince
+
+# JAVA
+if ( -d $HOME/opt/jdk ) then
+    setenv JAVA_HOME $HOME/opt/jdk
+    setenv PATH $JAVA_HOME/bin:$PATH
+    setenv CLASSPATH .:$JAVA_HOME/jre/lib/ext:$JAVA_HOME/lib/tools.jar
+endif
 
 # GEMS
 if ( -d $HOME/.gem/ruby/1.9.1 ) then
