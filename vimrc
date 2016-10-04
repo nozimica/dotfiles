@@ -156,3 +156,6 @@ if has('gui_running')
         set guifont=Consolas:h8:cANSI
     endif
 endif
+
+let g:vim_json_syntax_conceal = 0
+com! FormatJSON %!python -m json.tool
