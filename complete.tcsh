@@ -47,9 +47,8 @@ if ($?_complete) then
 	set f=`awk '/machine/ { print $2 }' < "$HOME/.netrc"` >& /dev/null
 	set hosts=($hosts $f)
     endif
-    if ( -r "$HOME/.ssh/known_hosts" ) then
-	set f=`cat "$HOME/.ssh/known_hosts" | cut -f 1 -d \ ` >& /dev/null
-	set f=`cat "$HOME/.ssh/known_hosts" | cut -f 1 -d \ | sed -e 's/,/ /g'` >& /dev/null
+    if ( -r "$HOME/.ssh/config" ) then
+	set f=`cat "$HOME/.ssh/config" | grep "Host " | cut -f 2 -d ' '` >& /dev/null
 	set hosts=($hosts $f)
     endif
     unset f
@@ -1141,7 +1140,7 @@ n@public@'`[ -r /usr/man/manp ]&& \ls -1 /usr/man/manp | sed s%\\.p.\*\$%%`'@ \
     if (! $?traditional_complete) then
         uncomplete vi
         uncomplete vim
-        complete {vi,vim,gvim,nvi,elvis} 	n/*/f:^*.{o,a,so,sa,aux,dvi,log,fig,bbl,blg,bst,idx,ilg,ind,toc}/
+        complete {vi,vim,gvim,nvi,elvis} 	n/*/f:^*.{o,a,so,sa,aux,dvi,fig,idx,ilg,ind,toc}/
         complete {ispell,spell,spellword}	'n@-d@`ls /usr/lib/ispell/*.aff | sed -e "s/\.aff//" `@' 'n/*/f:^*.{o,a,so,sa,aux,dvi,log,fig,bbl,blg,bst,idx,ilg,ind,toc}/'
         complete elm	'n/-[Ai]/f/' 'c@=@F:$HOME/Mail/@' 'n/-s/x:\<subject\>/'
         complete ncftp	'n@*@`sed -e '1,2d' $HOME/.ncftp/bookmarks | cut -f 1,2 -d "," | tr "," "\012" | sort | uniq ` '@

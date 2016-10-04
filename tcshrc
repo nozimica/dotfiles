@@ -33,6 +33,20 @@ endif
 if ( -d $HOME/.gem/ruby/1.9.1 ) then
     setenv PATH $HOME/.gem/ruby/1.9.1/bin:$PATH
 endif
+# JDK
+if ( -d $HOME/opt/jdk ) then
+    setenv JAVA_HOME $HOME/opt/jdk
+    setenv PATH $JAVA_HOME/bin:$PATH
+    if ( ! ($?LD_LIBRARY_PATH) ) then
+        setenv LD_LIBRARY_PATH $JAVA_HOME/jre/lib/amd64/server
+    else
+        setenv LD_LIBRARY_PATH $JAVA_HOME/jre/lib/amd64/server:$LD_LIBRARY_PATH
+    endif
+endif
+# Cabal
+if ( -d $HOME/.cabal ) then
+    setenv PATH $HOME/.cabal/bin:$PATH
+endif
 
 alias ?		history
 alias ls	'ls -lF'
@@ -85,12 +99,12 @@ switch ($TERM)
         breaksw
 endsw
 
-setenv LC_TIME "es_CL.UTF-8"
-setenv LC_PAPER "es_CL.UTF-8"
-setenv LC_MEASUREMENT "es_CL.UTF-8"
+# setenv LC_TIME "es_CL.UTF-8"
+# setenv LC_PAPER "es_CL.UTF-8"
+# setenv LC_MEASUREMENT "es_CL.UTF-8"
 
-setenv LD_LIBRARY_PATH $HOME/opt/postgres-xl/lib:$HOME/opt/postgresql/lib
-setenv PATH $HOME/opt/postgresql/bin:$PATH
+#setenv LD_LIBRARY_PATH $HOME/opt/postgres-xl/lib:$HOME/opt/postgresql/lib
+#setenv PATH $HOME/opt/postgresql/bin:$PATH
 #setenv PATH $HOME/opt/postgres-xl/bin:$HOME/opt/postgresql/bin:$PATH
 
 if ( -f $HOME/.aliases ) then

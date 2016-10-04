@@ -4,9 +4,11 @@
 # https://github.com/zhimsel/dotfiles/blob/master/install.sh
 
 # Get current dir (so run this script from anywhere)
-
 export DOTFILES_DIR
 DOTFILES_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+# Strip the last directory (this script resides in bin)
+DOTFILES_DIR="$( realpath ${DOTFILES_DIR}/.. )"
+
 export BACKUP_FOLDER
 BACKUP_FOLDER=backupFolder
 export BACKUP_TBZ
@@ -23,38 +25,55 @@ dfiles=(\
     vimrc \
     tcshrc \
     complete.tcsh \
+    Xresources \
+)
+
+# List of commands for each file
+declare -A commfiles=(\
+    ["Xresources"]="xrdb -merge ~/.Xresources" \
 )
 
 install_links () {
     for file in "${dfiles[@]}"
     do
+        print_title "$file"
         backup_and_link "$file"
     done
     pack_backup_folder
+    echo ""
 }
 
 backup_and_link () {
-    local newFile=$1
-    local currentFile
-    currentFile="$HOME/.$1"
+    local thisFile=$1
+    local localDotFile
+    localDotFile="$HOME/.$1"
 
     cd $DOTFILES_DIR
 
     # Check if source dotfile exists
-    if [[ ! -e "$newFile" ]]; then
-        echo "Error: $newFile doesn't exist."
+    if [[ ! -e "$DOTFILES_DIR/$thisFile" ]]; then
+        echo "Error: $thisFile doesn't exist."
         return
     fi
 
-    echo "Backing up $currentFile."
-    if [[ -e "$currentFile" ]] && [[ ! -L "$currentFile" ]]; then
-        mv $currentFile $BACKUP_FOLDER
+    if [[ ! -e "$localDotFile" ]] || [[ -e "$localDotFile" ]] && [[ ! -L "$localDotFile" ]]; then
+        if [[ -e "$localDotFile" ]] && [[ ! -L "$localDotFile" ]]; then
+            echo "Backing up $currentFile."
+            mv $localDotFile $BACKUP_FOLDER
+        fi
+        echo "Creating new $localDotFile as a link."
+        ln -s $DOTFILES_DIR/$thisFile $localDotFile
+    else
+        echo "Link for $localDotFile already exists."
     fi
 
-    echo "Creating new $currentFile as a link."
-    ln -s $DOTFILES_DIR/$newFile $currentFile
-
     echo ""
+
+    if [[ ${commfiles["$thisFile"]} ]]; then
+        echo "Executing post command for $localDotFile:"
+        echo "    ${commfiles[""$thisFile""]}"
+        eval ${commfiles["$thisFile"]}
+    fi
 }
 
 pack_backup_folder () {
@@ -77,6 +96,12 @@ check_scenario () {
 print_error_msg () {
     echo ""
     echo " *** ERROR: $1"
+    echo ""
+}
+
+print_title () {
+    echo "############################################################"
+    echo "#   File: $1"
     echo ""
 }
 
