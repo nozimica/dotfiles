@@ -23,6 +23,13 @@ setenv MANPATH /usr/share/man:/usr/local/man:/usr/local/share/man:$TEXLIVE_HOME/
 #setenv INFOPATH $TEXLIVE_HOME/texmf/doc/info:$INFOPATH
 setenv PDFVIEWER_texdoc evince
 
+# JAVA
+if ( -d $HOME/opt/jdk ) then
+    setenv JAVA_HOME $HOME/opt/jdk
+    setenv PATH $JAVA_HOME/bin:$PATH
+    setenv CLASSPATH .:$JAVA_HOME/jre/lib/ext:$JAVA_HOME/lib/tools.jar
+endif
+
 # GEMS
 if ( -d $HOME/.gem/ruby/1.9.1 ) then
     setenv PATH $HOME/.gem/ruby/1.9.1/bin:$PATH
@@ -104,3 +111,5 @@ endsw
 if ( -f $HOME/.aliases ) then
     source $HOME/.aliases
 endif
+
+alias PagespeedCacheFlush 'sudo touch /var/cache/mod_pagespeed/cache.flush'

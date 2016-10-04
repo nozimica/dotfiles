@@ -47,9 +47,8 @@ if ($?_complete) then
 	set f=`awk '/machine/ { print $2 }' < "$HOME/.netrc"` >& /dev/null
 	set hosts=($hosts $f)
     endif
-    if ( -r "$HOME/.ssh/known_hosts" ) then
-	set f=`cat "$HOME/.ssh/known_hosts" | cut -f 1 -d \ ` >& /dev/null
-	set f=`cat "$HOME/.ssh/known_hosts" | cut -f 1 -d \ | sed -e 's/,/ /g'` >& /dev/null
+    if ( -r "$HOME/.ssh/config" ) then
+	set f=`cat "$HOME/.ssh/config" | grep "Host " | cut -f 2 -d ' '` >& /dev/null
 	set hosts=($hosts $f)
     endif
     unset f
