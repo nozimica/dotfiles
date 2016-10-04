@@ -1,6 +1,7 @@
 set prompt = "[%n@%m:%~/]% "
 
 set history=150
+set histdup=prev
 set autologout
 set echo_style both
 limit coredumpsize 0k
