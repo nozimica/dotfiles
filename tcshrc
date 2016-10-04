@@ -96,3 +96,5 @@ setenv PATH $HOME/opt/postgresql/bin:$PATH
 if ( -f $HOME/.aliases ) then
     source $HOME/.aliases
 endif
+
+alias PagespeedCacheFlush 'sudo touch /var/cache/mod_pagespeed/cache.flush'
