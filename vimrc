@@ -7,6 +7,10 @@ set expandtab
 execute pathogen#infect()
 
 syntax on
+set background=dark
+" colorscheme solarized
+" let g:solarized_termcolors=256
+
 set autoindent
 " set smartindent
 filetype on
@@ -159,3 +163,5 @@ endif
 
 let g:vim_json_syntax_conceal = 0
 com! FormatJSON %!python -m json.tool
+
+autocmd BufNewFile,BufReadPost *.md set filetype=markdown
