@@ -113,3 +113,12 @@ if ( -f $HOME/.aliases ) then
 endif
 
 alias PagespeedCacheFlush 'sudo touch /var/cache/mod_pagespeed/cache.flush'
+
+# Anaconda paths
+setenv PYTHONNOUSERSITE True
+if ( -d $HOME/opt/anaconda3/bin ) then
+    setenv PATH $HOME/opt/anaconda3/bin:$PATH
+endif
+if ( -d $HOME/opt/anaconda2/bin ) then
+    setenv PATH $HOME/opt/anaconda2/bin:$PATH
+endif
