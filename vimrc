@@ -165,3 +165,7 @@ let g:vim_json_syntax_conceal = 0
 com! FormatJSON %!python -m json.tool
 
 autocmd BufNewFile,BufReadPost *.md set filetype=markdown
+
+" Supress italics and bold in LaTeX display.
+hi clear texItalStyle
+hi clear texBoldStyle
