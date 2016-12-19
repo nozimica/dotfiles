@@ -18,7 +18,6 @@ setenv TEXLIVE_HOME $HOME/opt/TexLive
 setenv PATH $HOME/bin:$PATH
 setenv PATH $TEXLIVE_HOME/bin/x86_64-linux:$PATH
 setenv PATH $HOME/usr/bin:$PATH
-setenv PATH $HOME/.local/bin:$PATH
 setenv MANPATH /usr/share/man:/usr/local/man:/usr/local/share/man:$TEXLIVE_HOME/texmf/doc/man
 #setenv INFOPATH $TEXLIVE_HOME/texmf/doc/info:$INFOPATH
 setenv PDFVIEWER_texdoc evince
@@ -28,6 +27,11 @@ if ( -d $HOME/opt/jdk ) then
     setenv JAVA_HOME $HOME/opt/jdk
     setenv PATH $JAVA_HOME/bin:$PATH
     setenv CLASSPATH .:$JAVA_HOME/jre/lib/ext:$JAVA_HOME/lib/tools.jar
+endif
+
+# Python packages
+if ( -d $HOME/.local/bin ) then
+    setenv PATH $HOME/.local/bin:$PATH
 endif
 
 # GEMS
