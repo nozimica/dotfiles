@@ -1,18 +1,85 @@
+###########################################################################
+# shell special variables
+
 set prompt = "[%n@%m:%~/]% "
 
-set history=150
-set histdup=prev
-set autologout
-set echo_style both
-#limit coredumpsize 0k
-#limit core 0k
-set correct=''
-set inputmode
-set listlinks
-set matchbeep
-set autolist
-# set ignoreeof
-set bindkey -v
+# don't put duplicate lines or lines starting with space in the history.
+# See bash(1) for more options
+HISTCONTROL=ignoreboth
+
+# append to the history file, don't overwrite it
+shopt -s histappend
+
+# for setting history length see HISTSIZE and HISTFILESIZE in bash(1)
+HISTSIZE=1000
+HISTFILESIZE=2000
+
+# check the window size after each command and, if necessary,
+# update the values of LINES and COLUMNS.
+shopt -s checkwinsize
+
+# set vi bindings for command line editing
+set -o vi
+
+# set variable identifying the chroot you work in (used in the prompt below)
+if [ -z "${debian_chroot:-}" ] && [ -r /etc/debian_chroot ]; then
+    debian_chroot=$(cat /etc/debian_chroot)
+fi
+
+# set a fancy prompt (non-color, unless we know we "want" color)
+case "$TERM" in
+    xterm-color|*-256color) color_prompt=yes;;
+esac
+
+# uncomment for a colored prompt, if the terminal has the capability; turned
+# off by default to not distract the user: the focus in a terminal window
+# should be on the output of commands, not on the prompt
+#force_color_prompt=yes
+
+if [ -n "$force_color_prompt" ]; then
+    if [ -x /usr/bin/tput ] && tput setaf 1 >&/dev/null; then
+	# We have color support; assume it's compliant with Ecma-48
+	# (ISO/IEC-6429). (Lack of such support is extremely rare, and such
+	# a case would tend to support setf rather than setaf.)
+	color_prompt=yes
+    else
+	color_prompt=
+    fi
+fi
+
+if [ "$color_prompt" = yes ]; then
+    PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
+else
+    PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w\$ '
+fi
+unset color_prompt force_color_prompt
+
+# If this is an xterm set the title to user@host:dir
+case "$TERM" in
+xterm*|rxvt*)
+    PS1="\[\e]0;${debian_chroot:+($debian_chroot)}\u@\h: \w\a\]$PS1"
+    ;;
+*)
+    ;;
+esac
+
+# enable color support of ls and also add handy aliases
+if [ -x /usr/bin/dircolors ]; then
+    test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
+    alias ls='ls --color=auto'
+    #alias dir='dir --color=auto'
+    #alias vdir='vdir --color=auto'
+
+    #alias grep='grep --color=auto'
+    #alias fgrep='fgrep --color=auto'
+    #alias egrep='egrep --color=auto'
+fi
+
+# colored GCC warnings and errors
+export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
+
+###########################################################################
+# export custom env vars
 
 export TEXLIVE_HOME=$HOME/opt/TexLive
 export PATH=$HOME/bin:$PATH
@@ -23,92 +90,63 @@ export MANPATH=/usr/share/man:/usr/local/man:/usr/local/share/man:$TEXLIVE_HOME/
 #export INFOPATH=$TEXLIVE_HOME/texmf/doc/info:$INFOPATH
 export PDFVIEWER_texdoc=evince
 
+###########################################################################
+# environment variables for specific applications and packages
+
 # JAVA
 if [ -d $HOME/opt/jdk ]; then
     export JAVA_HOME=$HOME/opt/jdk
     export PATH=$JAVA_HOME/bin:$PATH
     export CLASSPATH=.:$JAVA_HOME/jre/lib/ext:$JAVA_HOME/lib/tools.jar
-fi
-
-# GEMS
-if [ -d $HOME/.gem/ruby/1.9.1 ]; then
-    export PATH=$HOME/.gem/ruby/1.9.1/bin:$PATH
-fi
-# JDK
-if [ -d $HOME/opt/jdk ]; then
-    export JAVA_HOME=$HOME/opt/jdk
-    export PATH=$JAVA_HOME/bin:$PATH
     #if [ -z "$LD_LIBRARY_PATH" ]; then
     #    export LD_LIBRARY_PATH=$JAVA_HOME/jre/lib/amd64/server
     #else
     #    export LD_LIBRARY_PATH=$JAVA_HOME/jre/lib/amd64/server:$LD_LIBRARY_PATH
     #fi
 fi
+
+# Anaconda paths
+if [ -d $HOME/opt/anaconda3/bin ]; then
+    export PYTHONNOUSERSITE=True
+    export PATH=$HOME/opt/anaconda3/bin:$PATH
+elif [ -d $HOME/opt/anaconda2/bin ]; then
+    export PYTHONNOUSERSITE=True
+    export PATH=$HOME/opt/anaconda2/bin:$PATH
+elif [ -d $HOME/.local/bin ]; then
+    export PATH=$HOME/.local/bin:$PATH
+fi
+
+# GEMS
+if [ -d $HOME/.gem/ruby/1.9.1 ]; then
+    export PATH=$HOME/.gem/ruby/1.9.1/bin:$PATH
+fi
+
 # Cabal
 if [ -d $HOME/.cabal ]; then
     export PATH=$HOME/.cabal/bin:$PATH
 fi
 
-alias ?='history'
-alias ls='ls -lF'
-alias rm='rm -i'
-alias cp='cp -i'
-alias mv='mv -i'
-alias m=more
-alias w='w | more'
-#alias cd='cd \!*;echo $cwd'
-alias ..='cd ..'
-alias pwd='echo $cwd'
-alias who='who | sort | more'
-alias wget2='wget -r -nH --cut-dirs=1 -b -t 0 -c -i'
-alias wgetcompl='wget -E -H -k -K -p -nH'
-alias l='ls -l --color | more'
-alias lt='ls -lt --color | more'
-alias lat='ls -lat --color | more'
-alias lsz='ls -la | sort -k 5 -nr | more'
-alias lsnoz='ls -la | sort -k 3 | grep nozimica'
-alias d='ls -lA --color | more'
-alias dl='ls -lA --color --group-directories-first | more'
-alias ll='ls | more'
-alias c='clear'
-alias ddd='ls | more'
-alias bello='telnet Biblios.dic.uchile.cl'
-alias duk='du -k | sort -nr | more'
-alias mp3p='rm -f /tmp/mplayerfifo; mkfifo /tmp/mplayerfifo; mplayer -input file=/tmp/mplayerfifo *.mp3'
-alias infomp3='mp3info -x -r a *.mp3'
-alias dt='ls -lt | more'
-alias lspdf='ls *.pdf | more'
-alias psnoz='ps -U nozimica'
-alias tmp='cd /tmp'
-alias vtmp='cd /var/tmp'
-alias dukk='dukk | more'
-
-alias ipp='/sbin/ifconfig | grep -e "inet:" -e "addr:" | grep -v "inet6" | grep -v "127.0.0.1" | head -n 1 | awk '"'"'{print $2}'"'"' | cut -c6-'
-
-alias removeSpaces="rename -v 's/\ /\_/g' *"
-
-# http://unix.stackexchange.com/q/32017/6803
-#source ~/.complete.tcsh
-
-alias xtxt='xterm -geometry 116x66+1000+0 & ; xterm -geometry 116x66+2000+0 &;'
-alias freemem='ps -e -orss=,args= | sort -b -k1,1n'
-alias gcal='gcal -s 1'
-
-case "$TERM" in
-"xterm*")
-        alias precmd='echo -n "\033]0;${HOST}:$cwd\007"'
-        ;;
-esac
 
 # export LC_TIME="es_CL.UTF-8"
 # export LC_PAPER="es_CL.UTF-8"
 # export LC_MEASUREMENT="es_CL.UTF-8"
 
-#export LD_LIBRARY_PATH=$HOME/opt/postgres-xl/lib:$HOME/opt/postgresql/lib
-#export PATH=$HOME/opt/postgresql/bin:$PATH
-#export PATH=$HOME/opt/postgres-xl/bin:$HOME/opt/postgresql/bin:$PATH
+# Alias definitions.
+# You may want to put all your additions into a separate file like
+# ~/.bash_aliases, instead of adding them here directly.
+# See /usr/share/doc/bash-doc/examples in the bash-doc package.
 
-if [ -f $HOME/.aliases ]; then
-    source $HOME/.aliases
+if [ -f ~/.bash_aliases ]; then
+    . ~/.bash_aliases
 fi
 
+# enable programmable completion features (you don't need to enable
+# this, if it's already enabled in /etc/bash.bashrc and /etc/profile
+# sources /etc/bash.bashrc).
+if ! shopt -oq posix; then
+  if [ -f /usr/share/bash-completion/bash_completion ]; then
+    . /usr/share/bash-completion/bash_completion
+  elif [ -f /etc/bash_completion ]; then
+    . /etc/bash_completion
+  fi
+fi
