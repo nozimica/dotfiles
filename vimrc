@@ -169,3 +169,9 @@ autocmd BufNewFile,BufReadPost *.md set filetype=markdown
 " Supress italics and bold in LaTeX display.
 hi clear texItalStyle
 hi clear texBoldStyle
+hi def link markdownItalic              NONE
+hi def link markdownItalicDelimiter     NONE
+hi def link markdownBold                NONE
+hi def link markdownBoldDelimiter       NONE
+hi def link markdownBoldItalic          NONE
+hi def link markdownBoldItalicDelimiter NONE
