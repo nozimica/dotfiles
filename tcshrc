@@ -1,18 +1,41 @@
+###########################################################################
+# shell special variables
+
 set prompt = "[%n@%m:%~/]% "
 
+# history control
 set history=150
 set histdup=prev
+
 set autologout
+
+# style of echo builtin
 set echo_style both
+
 limit coredumpsize 0k
 limit core 0k
+
+# avoid correction of commands
 set correct=''
 set inputmode
+
+# the ls-F builtin command shows the type of file to which each symbolic link points. 
 set listlinks
-set matchbeep
+
+# completion never beeps
+set matchbeep=never
+
+# possibilities are listed after an ambiguous completion
 set autolist
+
+# If unset, `1' is used, i.e., the shell exits on a single `^D'. 
 # set ignoreeof
+
+# vi editing of command line
 bindkey -v
+
+###########################################################################
+# custom environment variables
 
 setenv TEXLIVE_HOME $HOME/opt/TexLive
 setenv PATH $HOME/bin:$PATH
@@ -22,15 +45,29 @@ setenv MANPATH /usr/share/man:/usr/local/man:/usr/local/share/man:$TEXLIVE_HOME/
 #setenv INFOPATH $TEXLIVE_HOME/texmf/doc/info:$INFOPATH
 setenv PDFVIEWER_texdoc evince
 
+###########################################################################
+# environment variables for specific applications and packages
+
 # JAVA
 if ( -d $HOME/opt/jdk ) then
     setenv JAVA_HOME $HOME/opt/jdk
     setenv PATH $JAVA_HOME/bin:$PATH
     setenv CLASSPATH .:$JAVA_HOME/jre/lib/ext:$JAVA_HOME/lib/tools.jar
+    if ( ! ($?LD_LIBRARY_PATH) ) then
+        setenv LD_LIBRARY_PATH $JAVA_HOME/jre/lib/amd64/server
+    else
+        setenv LD_LIBRARY_PATH $JAVA_HOME/jre/lib/amd64/server:$LD_LIBRARY_PATH
+    endif
 endif
 
-# Python packages
-if ( -d $HOME/.local/bin ) then
+# Anaconda paths
+if ( -d $HOME/opt/anaconda3/bin ) then
+    setenv PYTHONNOUSERSITE True
+    setenv PATH $HOME/opt/anaconda3/bin:$PATH
+else if ( -d $HOME/opt/anaconda2/bin ) then
+    setenv PYTHONNOUSERSITE True
+    setenv PATH $HOME/opt/anaconda2/bin:$PATH
+else if ( -d $HOME/.local/bin ) then
     setenv PATH $HOME/.local/bin:$PATH
 endif
 
@@ -38,20 +75,14 @@ endif
 if ( -d $HOME/.gem/ruby/1.9.1 ) then
     setenv PATH $HOME/.gem/ruby/1.9.1/bin:$PATH
 endif
-# JDK
-if ( -d $HOME/opt/jdk ) then
-    setenv JAVA_HOME $HOME/opt/jdk
-    setenv PATH $JAVA_HOME/bin:$PATH
-    if ( ! ($?LD_LIBRARY_PATH) ) then
-        setenv LD_LIBRARY_PATH $JAVA_HOME/jre/lib/amd64/server
-    else
-        setenv LD_LIBRARY_PATH $JAVA_HOME/jre/lib/amd64/server:$LD_LIBRARY_PATH
-    endif
-endif
+
 # Cabal
 if ( -d $HOME/.cabal ) then
     setenv PATH $HOME/.cabal/bin:$PATH
 endif
+
+###########################################################################
+# aliases
 
 alias ?		history
 alias ls	'ls -lF'
@@ -118,11 +149,3 @@ endif
 
 alias PagespeedCacheFlush 'sudo touch /var/cache/mod_pagespeed/cache.flush'
 
-# Anaconda paths
-setenv PYTHONNOUSERSITE True
-if ( -d $HOME/opt/anaconda3/bin ) then
-    setenv PATH $HOME/opt/anaconda3/bin:$PATH
-endif
-if ( -d $HOME/opt/anaconda2/bin ) then
-    setenv PATH $HOME/opt/anaconda2/bin:$PATH
-endif
