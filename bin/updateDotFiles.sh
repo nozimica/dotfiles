@@ -26,6 +26,9 @@ dfiles=(\
     tcshrc \
     complete.tcsh \
     Xresources \
+    bashrc \
+    bash_aliases
+    gitconfig \
 )
 
 # List of commands for each file
