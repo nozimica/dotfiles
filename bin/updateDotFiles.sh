@@ -18,7 +18,7 @@ echo "Working into '$DOTFILES_DIR'."
 
 # Update dotfiles itself first
 
-# [ -d "$DOTFILES_DIR/.git" ] && git --work-tree="$DOTFILES_DIR" --git-dir="$DOTFILES_DIR/.git" pull origin master
+[ -d "$DOTFILES_DIR/.git" ] && git --work-tree="$DOTFILES_DIR" --git-dir="$DOTFILES_DIR/.git" pull origin master
 
 # List of dotfiles
 dfiles=(\
@@ -52,19 +52,28 @@ backup_and_link () {
 
     # Check if source dotfile exists
     if [[ ! -e "$DOTFILES_DIR/$thisFile" ]]; then
-        echo "Error: $thisFile doesn't exist."
-        return
+        print_error_msg "$thisFile doesn't exist."
+        exit 2
     fi
 
-    if [[ ! -e "$localDotFile" ]] || [[ -e "$localDotFile" ]] && [[ ! -L "$localDotFile" ]]; then
-        if [[ -e "$localDotFile" ]] && [[ ! -L "$localDotFile" ]]; then
-            echo "Backing up $currentFile."
-            mv $localDotFile $BACKUP_FOLDER
-        fi
+    # test if target file exists and is a directory (link or not)
+    if [[ -d "$localDotFile" ]]; then
+        print_error_msg "$localDotFile is a directory."
+        exit 2
+    fi
+
+    # test if target file exists and is not a link
+    if [[ -e "$localDotFile" ]] && [[ ! -L "$localDotFile" ]]; then
+        echo "Link for $localDotFile already exists."
+        echo "Backing up $localDotFile."
+        cp $localDotFile $localDotFile.origBeforeUpdateDotFiles
+        mv $localDotFile $BACKUP_FOLDER
+    fi
+
+    # test if target file does not exist yet
+    if [[ ! -e "$localDotFile" ]]; then
         echo "Creating new $localDotFile as a link."
         ln -s $DOTFILES_DIR/$thisFile $localDotFile
-    else
-        echo "Link for $localDotFile already exists."
     fi
 
     echo ""
