@@ -1,0 +1,19 @@
+[user]
+	name = Nicolás E. Ozimica
+	email = 
+[core]
+	editor = vim
+	pager = less -F -X
+[merge]
+	tool = vimdiff
+[color]
+	branch = auto
+	diff = auto
+	status = auto
+[branch "master"]
+	remote = origin
+	merge = refs/heads/master
+[push]
+	default = simple
+[remote "origin"]
+	push = HEAD
