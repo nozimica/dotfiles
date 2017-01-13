@@ -46,10 +46,10 @@ git clone https://github.com/garbas/vim-snipmate.git
 # Optional:
 git clone https://github.com/honza/vim-snippets.git
 
-# Install flake8
-easy_install --user flake8
-cd ~/.vim/bundle
-git clone https://github.com/nvie/vim-flake8
+# # Install flake8
+# easy_install --user flake8
+# cd ~/.vim/bundle
+# git clone https://github.com/nvie/vim-flake8
 
 # Install vim-json
 cd ~/.vim/bundle
@@ -62,9 +62,9 @@ git clone git://github.com/elzr/vim-json.git
 cd ~/.vim/bundle
 git clone https://github.com/ervandew/supertab.git
 
-# Install jedi-vim (for Python)
-cd ~/.vim/bundle
-git clone --recursive https://github.com/davidhalter/jedi-vim.git
+# # Install jedi-vim (for Python)
+# cd ~/.vim/bundle
+# git clone --recursive https://github.com/davidhalter/jedi-vim.git
 
 ########################################################
 ## Colors
