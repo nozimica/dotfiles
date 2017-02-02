@@ -6,8 +6,10 @@
 # Get current dir (so run this script from anywhere)
 export DOTFILES_DIR
 DOTFILES_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+
 # Strip the last directory (this script resides in bin)
-DOTFILES_DIR="$( realpath ${DOTFILES_DIR}/.. )"
+# DOTFILES_DIR="$( realpath ${DOTFILES_DIR}/.. )"
+DOTFILES_DIR="$( readlink -f ${DOTFILES_DIR}/.. )"
 
 export BACKUP_FOLDER
 BACKUP_FOLDER=backupFolder
