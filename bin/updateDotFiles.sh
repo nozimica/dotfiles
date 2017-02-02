@@ -3,18 +3,6 @@
 ## Inspired from (among others):
 # https://github.com/zhimsel/dotfiles/blob/master/install.sh
 
-# Get current dir (so run this script from anywhere)
-export DOTFILES_DIR
-DOTFILES_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
-
-# Strip the last directory (this script resides in bin)
-# DOTFILES_DIR="$( realpath ${DOTFILES_DIR}/.. )"
-DOTFILES_DIR="$( readlink -f ${DOTFILES_DIR}/.. )"
-
-export BACKUP_FOLDER
-BACKUP_FOLDER=backupFolder
-export BACKUP_TBZ
-BACKUP_TBZ=$BACKUP_FOLDER-`date +%Y-%m-%d`.tbz
 
 # List of dotfiles
 dfiles=(\
@@ -107,12 +95,7 @@ check_scenario () {
         exit 2
     fi
     echo ""
-    print_msg "Backup folder:"
-    echo $DOTFILES_DIR/$BACKUP_TBZ
-    if [[ -e "$DOTFILES_DIR/$BACKUP_TBZ" ]]; then
-        print_error_msg "Backup tbz already exists. Check manually."
-        exit 2
-    fi
+    print_msg "Backup folder: $BACKUP_TBZ"
     mkdir $DOTFILES_DIR/$BACKUP_FOLDER
     echo ""
 }
@@ -132,6 +115,33 @@ print_title () {
 print_msg () {
     echo -e "$(tput setaf 4)$(tput bold)$1$(tput sgr0)"
 }
+
+# Get current dir (so run this script from anywhere)
+export DOTFILES_DIR
+DOTFILES_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+
+# Strip the last directory (this script resides in bin)
+# DOTFILES_DIR="$( realpath ${DOTFILES_DIR}/.. )"
+DOTFILES_DIR="$( readlink -f ${DOTFILES_DIR}/.. )"
+
+export BACKUP_FOLDER
+BACKUP_FOLDER=backupFolder
+export BACKUP_TBZ
+THISDATE=`date +%Y-%m-%d`
+BACKUP_TBZ=${DOTFILES_DIR}/${BACKUP_FOLDER}-${THISDATE}.tbz
+
+# if [[ -e "$BACKUP_TBZ" ]]; then
+#     print_error_msg "Backup file '$BACKUP_TBZ' already exists. Check manually."
+#     exit 2
+# fi
+
+BACKUP_INDEX=0
+while [[ -f $BACKUP_TBZ ]]; do
+    print_error_msg "Backup file '$BACKUP_TBZ' already exists. Checking alternative name."
+    BACKUP_INDEX=$((BACKUP_INDEX + 1))
+    BACKUP_TBZ=${DOTFILES_DIR}/${BACKUP_FOLDER}-${THISDATE}-v${BACKUP_INDEX}.tbz
+    echo "Backup: $BACKUP_TBZ"
+done
 
 echo ""
 echo "For every file in this repo:"
