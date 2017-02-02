@@ -17,6 +17,7 @@ BACKUP_TBZ=$BACKUP_FOLDER-`date +%Y-%m-%d`.tbz
 # List of dotfiles
 dfiles=(\
     vimrc \
+    vimrc-plug \
     tcshrc \
     complete.tcsh \
     Xresources \
@@ -28,7 +29,12 @@ dfiles=(\
 # List of commands for each file
 declare -A commfiles=(\
     ["Xresources"]="xrdb -merge ~/.Xresources" \
+    ["gitconfig"]="gitconfigfunc" \
 )
+function gitconfigfunc() {
+    read -p 'Ingrese su email para git: ' gitemail
+    git config --global user.email "${gitemail}"
+}
 
 install_links () {
     for file in "${dfiles[@]}"
