@@ -177,4 +177,4 @@ hi def link markdownBoldDelimiter       NONE
 hi def link markdownBoldItalic          NONE
 hi def link markdownBoldItalicDelimiter NONE
 
-source ~/.vimrc.plug
+source ~/.vimrc-plug
