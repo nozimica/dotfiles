@@ -1,9 +1,7 @@
 ###########################################################################
 # shell special variables
 
-set prompt = "[%n@%m:%~/]% "
-
-# don't put duplicate lines or lines starting with space in the history.
+# ignore both duplicate lines or lines starting with space in the history,
 # See bash(1) for more options
 HISTCONTROL=ignoreboth
 
@@ -57,7 +55,8 @@ unset color_prompt force_color_prompt
 # If this is an xterm set the title to user@host:dir
 case "$TERM" in
 xterm*|rxvt*)
-    PS1="\[\e]0;${debian_chroot:+($debian_chroot)}\u@\h: \w\a\]$PS1"
+    # PS1="\[\e]0;${debian_chroot:+($debian_chroot)}\u@\h: \w\a\]$PS1"
+    PS1='${debian_chroot:+($debian_chroot)}[\u@\h:\w/]\$ '
     ;;
 *)
     ;;
@@ -140,6 +139,10 @@ if [ -f ~/.bash_aliases ]; then
     . ~/.bash_aliases
 fi
 
+if [ -f ~/.bash_aliases.local ]; then
+    . ~/.bash_aliases.local
+fi
+
 # enable programmable completion features (you don't need to enable
 # this, if it's already enabled in /etc/bash.bashrc and /etc/profile
 # sources /etc/bash.bashrc).
@@ -150,3 +153,5 @@ if ! shopt -oq posix; then
     . /etc/bash_completion
   fi
 fi
+
+[ -f ~/.fzf.bash ] && source ~/.fzf.bash
