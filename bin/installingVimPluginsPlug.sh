@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 # Install vim-plug
 mkdir -p ~/.vim/autoload
@@ -11,3 +11,6 @@ mkdir -p ~/.vim/plugged
 
 # Create colors folder if does not exists yet.
 [ ! -d ~/.vim/colors ] && mkdir ~/.vim/colors
+
+# Update plugins through vim-plug
+vim +PlugUpdate
