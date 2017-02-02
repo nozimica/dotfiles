@@ -47,20 +47,6 @@ else
     map ,e :e <C-R>=expand("%:p:h") . "\" <CR>
 endif
 
-set pastetoggle=<F9>
-map <F3> :tabe<CR>:Project<CR>
-map <F4> :Project<CR>
-map <F10> :!make<CR>
-map <F11> :!make complete<CR>
-map <F8> :!xpdf -remote fromvim informe.pdf >& /dev/null &<CR><CR>
-map <F6> :b#<CR>
-map <F5> :!xpdf -remote fromvim -reload <CR><CR>
-map <S-F10> :!make<CR><CR><ESC> :!xpdf -remote fromvim -reload <CR><CR>
-map <C-Left> :!xpdf -remote fromvim -exec pageUp <CR><CR>
-map <C-Right> :!xpdf -remote fromvim -exec pageDown <CR><CR>
-map <C-Up> :!xpdf -remote fromvim -exec "gotoPage(1)" <CR><CR>
-map <C-Down> :!xpdf -remote fromvim -exec gotoLastPage <CR><CR>
-
 " tip 91
 set dictionary-=/usr/share/dict/words dictionary+=/usr/share/dict/words
 
@@ -100,23 +86,22 @@ map ,cd :cd %:p:h<CR>
 "au FileType javascript call JavaScriptFold()
 ""au FileType javascript setl fen
 
-function FileHeading()
-  let s:line=line(".")
-  call setline(s:line,"/*")
-  call append(s:line," * ")
-  call append(s:line+1," * @name")
-  "call append(s:line+3," * Fecha - ".strftime("%d %M %Y"))
-  call append(s:line+2," * @param")
-  call append(s:line+3," * @param")
-  call append(s:line+4," * @return")
-  "call append(s:line+1," * Author: Nicolas E. Ozimica <nozimica@gmail.com>")
-  "call append(s:line+5," * =============================================================================")
-  call append(s:line+5," *")
-  call append(s:line+6," */")
-  unlet s:line
-endfunction
-
-map <S-F12> <Esc>mz:execute FileHeading()<CR>`zjjA
+" function FileHeading()
+"   let s:line=line(".")
+"   call setline(s:line,"/*")
+"   call append(s:line," * ")
+"   call append(s:line+1," * @name")
+"   "call append(s:line+3," * Fecha - ".strftime("%d %M %Y"))
+"   call append(s:line+2," * @param")
+"   call append(s:line+3," * @param")
+"   call append(s:line+4," * @return")
+"   "call append(s:line+1," * Author: Nicolas E. Ozimica <nozimica@gmail.com>")
+"   "call append(s:line+5," * =============================================================================")
+"   call append(s:line+5," *")
+"   call append(s:line+6," */")
+"   unlet s:line
+" endfunction
+" map <S-F12> <Esc>mz:execute FileHeading()<CR>`zjjA
 
 "" http://www.reddit.com/r/vim/comments/kz84u/what_are_some_simple_yet_mindblowing_tweaks_to/
 "" move a line of text using ALT+[jk], indent with ALT+[hl]
@@ -144,6 +129,20 @@ set scrolloff=5
 
 " allow freeform selection (i.e. ignoring line endings) in visual block mode
 set virtualedit+=block
+
+map <F6> :b#<CR>
+set pastetoggle=<F9>
+map <F10> :!make<CR>
+map <F11> :!make complete<CR>
+map <S-F10> :!make<CR><CR><ESC> :!xpdf -remote fromvim -reload <CR><CR>
+
+" " maps for xpdf
+" map <F8> :!xpdf -remote fromvim informe.pdf >& /dev/null &<CR><CR>
+" map <F5> :!xpdf -remote fromvim -reload <CR><CR>
+" map <C-Left> :!xpdf -remote fromvim -exec pageUp <CR><CR>
+" map <C-Right> :!xpdf -remote fromvim -exec pageDown <CR><CR>
+" map <C-Up> :!xpdf -remote fromvim -exec "gotoPage(1)" <CR><CR>
+" map <C-Down> :!xpdf -remote fromvim -exec gotoLastPage <CR><CR>
 
 " https://robots.thoughtbot.com/vim-splits-move-faster-and-more-naturally
 nnoremap <C-J> <C-W><C-J>
@@ -181,3 +180,7 @@ hi def link markdownBoldItalicDelimiter NONE
 let g:netrw_liststyle=3
 
 source ~/.vimrc-plug
+
+let g:startify_fortune_use_unicode = 1
+let g:startify_custom_header =
+    \ 'map(startify#fortune#boxed(), "\"   \".v:val")'

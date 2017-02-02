@@ -20,7 +20,7 @@ Plug 'tpope/vim-speeddating'
 
 " Install Gundo
 Plug 'sjl/gundo.vim', { 'dir': '~/.vim/bundle/gundo' }
-" add a mapping to ~/.vimrc
+
 nnoremap <F5> :GundoToggle<CR>
 
 " Install Dispatch
@@ -57,11 +57,20 @@ Plug 'mhinz/vim-startify'
 " Install Tagbar
 Plug 'majutsushi/tagbar'
 
+map <F8> :TagbarToggle<CR>
+map! <F8> <ESC>:TagbarToggle<CR>
+
 " Install CtrlP
 Plug 'ctrlpvim/ctrlp.vim'
 
+map <F7> :CtrlP<CR>
+map! <F7> <ESC>:CtrlP<CR>
+
 " Install Vimfiler
 Plug 'shougo/vimfiler.vim'
+
+" Install fzf
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 
 "#######################################################
 "# Tab completion
@@ -80,7 +89,5 @@ Plug 'ervandew/supertab'
 
 " Install Sandydune
 Plug 'idbrii/vim-sandydune', { 'dir': '~/.vim/colors/vim-sandydune' }
-
-Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 
 call plug#end()
