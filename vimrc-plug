@@ -65,9 +65,22 @@ Plug 'ctrlpvim/ctrlp.vim'
 
 map <F7> :CtrlP<CR>
 map! <F7> <ESC>:CtrlP<CR>
+" Ctrl- P mapping and two custom split keymappings (https://github.com/kien/ctrlp.vim)
+let g:ctrlp_map = '<c-p>'
+nmap <c-n>s :split<CR><c-w>j<c-p>
+nmap <c-n>v :vsplit<CR><c-w>l<c-p>
+
+" Install Unite
+Plug 'shougo/unite.vim'
 
 " Install Vimfiler
 Plug 'shougo/vimfiler.vim'
+
+" let g:vimfiler_tree_leaf_icon = ' '
+let g:vimfiler_tree_opened_icon = '▾'
+let g:vimfiler_tree_closed_icon = '▸'
+let g:vimfiler_file_icon = '-'
+let g:vimfiler_marked_file_icon = '*'
 
 " Install fzf
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
