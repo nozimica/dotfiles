@@ -48,6 +48,20 @@ xmap gA <Plug>(EasyAlign)
 " Start interactive EasyAlign for a motion/text object (e.g. gaip)
 nmap gA <Plug>(EasyAlign)
 
+" Install Goyo
+Plug 'junegunn/goyo.vim'
+
+" Install Startify
+Plug 'mhinz/vim-startify'
+
+" Install Tagbar
+Plug 'majutsushi/tagbar'
+
+" Install CtrlP
+Plug 'ctrlpvim/ctrlp.vim'
+
+" Install Vimfiler
+Plug 'shougo/vimfiler.vim'
 
 "#######################################################
 "# Tab completion

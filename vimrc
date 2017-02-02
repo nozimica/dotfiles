@@ -177,4 +177,7 @@ hi def link markdownBoldDelimiter       NONE
 hi def link markdownBoldItalic          NONE
 hi def link markdownBoldItalicDelimiter NONE
 
+" make netrw display a tree view
+let g:netrw_liststyle=3
+
 source ~/.vimrc-plug
