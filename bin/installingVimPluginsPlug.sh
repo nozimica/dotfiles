@@ -1,10 +1,13 @@
 #!/bin/bash
 
 # Install vim-plug
-mkdir -p ~/.vim/autoload
-curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
-        https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-mkdir -p ~/.vim/plugged
+[ ! -d ~/.vim/autoload ] && mkdir -p ~/.vim/autoload
+
+if [[ ! -e ~/.vim/autoload/plug.vim ]]; then
+    curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
+            https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+    mkdir -p ~/.vim/plugged
+fi
 
 ########################################################
 ## Colors

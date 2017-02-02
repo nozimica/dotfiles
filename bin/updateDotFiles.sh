@@ -32,6 +32,7 @@ dfiles=(\
 declare -A commfiles=(\
     ["Xresources"]="xrdb -merge ~/.Xresources" \
     ["gitconfig"]="gitconfigfunc" \
+    ["vimrc-plug"]="./bin/installingVimPluginsPlug.sh" \
 )
 function gitconfigfunc() {
     read -p 'Ingrese su email para git: ' gitemail
