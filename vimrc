@@ -3,8 +3,9 @@ set showmatch
 set ts=4
 set shiftwidth=4
 set expandtab
-" pathogen
-execute pathogen#infect()
+
+" " pathogen
+" execute pathogen#infect()
 
 syntax on
 set background=dark
@@ -175,3 +176,5 @@ hi def link markdownBold                NONE
 hi def link markdownBoldDelimiter       NONE
 hi def link markdownBoldItalic          NONE
 hi def link markdownBoldItalicDelimiter NONE
+
+source ~/.vimrc.plug

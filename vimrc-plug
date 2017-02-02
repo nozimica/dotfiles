@@ -1,0 +1,72 @@
+call plug#begin('~/.vim/plugged')
+
+" Install Repeat
+Plug 'tpope/vim-repeat'
+
+" Install Fugitive
+Plug 'tpope/vim-fugitive', { 'do': 'vim -u NONE -c ''helptags vim-fugitive/doc'' -c q' }
+
+" Install Surround
+Plug 'tpope/vim-surround'
+
+" Install Commentary
+Plug 'tpope/vim-commentary'
+
+" Install Characterize
+Plug 'tpope/vim-characterize'
+
+" Install SpeedDating
+Plug 'tpope/vim-speeddating'
+
+" Install Gundo
+Plug 'sjl/gundo.vim', { 'dir': '~/.vim/bundle/gundo' }
+" add a mapping to ~/.vimrc
+nnoremap <F5> :GundoToggle<CR>
+
+" Install Dispatch
+Plug 'tpope/vim-dispatch'
+
+" Install SnipMate
+Plug 'tomtom/tlib_vim'
+Plug 'MarcWeber/vim-addon-mw-utils'
+Plug 'garbas/vim-snipmate'
+" Optional:
+Plug 'honza/vim-snippets'
+
+" # Install flake8
+" easy_install --user flake8
+" Plug 'nvie/vim-flake8
+
+" Install vim-json
+Plug 'elzr/vim-json'
+
+" Install Easy-align
+Plug 'junegunn/vim-easy-align'
+" Start interactive EasyAlign in visual mode (e.g. vipga)
+xmap gA <Plug>(EasyAlign)
+
+" Start interactive EasyAlign for a motion/text object (e.g. gaip)
+nmap gA <Plug>(EasyAlign)
+
+
+"#######################################################
+"# Tab completion
+
+" Install SuperTab
+Plug 'ervandew/supertab'
+
+" # Install jedi-vim (for Python)
+" git clone --recursive https://github.com/davidhalter/jedi-vim.git
+
+"#######################################################
+"# Colors
+
+" Create colors folder if does not exists yet.
+" [ ! -d ~/.vim/colors ] && mkdir ~/.vim/colors
+
+" Install Sandydune
+Plug 'idbrii/vim-sandydune', { 'dir': '~/.vim/colors/vim-sandydune' }
+
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+
+call plug#end()
