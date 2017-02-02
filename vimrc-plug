@@ -85,6 +85,18 @@ let g:vimfiler_marked_file_icon = '*'
 " Install fzf
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 
+" " Install vim-autotag
+" Plug 'craigemery/vim-autotag'
+" let g:autotagTagsFile="~/.vim/.tags"
+" let g:autotagDisabled=0
+
+Plug 'xolox/vim-easytags'
+Plug 'xolox/vim-misc'
+" let g:easytags_file = "~/.vim/.tags"
+let g:easytags_async = 1
+" let g:easytags_syntax_keyword = 'always'     " comment if has bad performance
+" let g:easytags_by_filetype = "~/.vim"
+
 "#######################################################
 "# Tab completion
 
