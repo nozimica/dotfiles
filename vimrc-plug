@@ -53,6 +53,8 @@ Plug 'junegunn/goyo.vim'
 
 " Install Startify
 Plug 'mhinz/vim-startify'
+let g:startify_files_number = 16
+map <F3> :Startify<CR>
 
 " Install Tagbar
 Plug 'majutsushi/tagbar'

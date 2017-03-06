@@ -134,9 +134,9 @@ map <F6> :b#<CR>
 set pastetoggle=<F9>
 map <F10> :!make<CR>
 map <F11> :!make complete<CR>
-map <S-F10> :!make<CR><CR><ESC> :!xpdf -remote fromvim -reload <CR><CR>
 
 " " maps for xpdf
+" map <S-F10> :!make<CR><CR><ESC> :!xpdf -remote fromvim -reload <CR><CR>
 " map <F8> :!xpdf -remote fromvim informe.pdf >& /dev/null &<CR><CR>
 " map <F5> :!xpdf -remote fromvim -reload <CR><CR>
 " map <C-Left> :!xpdf -remote fromvim -exec pageUp <CR><CR>
