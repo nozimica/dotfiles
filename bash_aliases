@@ -42,3 +42,5 @@ alias removeSpaces="rename -v 's/\ /\_/g' *"
 alias xtxt='xterm -geometry 116x66+1000+0 & ; xterm -geometry 116x66+2000+0 &;'
 alias freemem='ps -e -orss=,args= | sort -b -k1,1n'
 alias gcal='gcal -s 1'
+
+alias listFailedPasswords="sudo zgrep -h 'Failed password' /var/log/auth.* | grep sshd | awk '{print $1,$2}' | sort -k 1,1M -k 2n | uniq -c"
