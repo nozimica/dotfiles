@@ -181,9 +181,12 @@ let g:netrw_keepdir      = 0
 let g:netrw_liststyle    = 3        " make netrw display a tree view
 let g:netrw_sort_options = 'i'
 
-source ~/.vimrc-plug
-
 let mapleader=','
 
-highlight LineNr ctermfg=white ctermbg=grey
-" highlight SignColumn ctermfg=white ctermbg=grey
+set number
+set cursorline
+highlight clear CursorLine
+highlight CursorLineNR cterm=bold ctermbg=black
+highlight LineNr ctermfg=white ctermbg=DarkGrey guifg=white guibg=DarkGrey
+
+source ~/.vimrc-plug
