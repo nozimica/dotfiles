@@ -54,6 +54,11 @@ Plug 'junegunn/goyo.vim'
 " Install Startify
 Plug 'mhinz/vim-startify'
 let g:startify_files_number = 16
+let g:startify_fortune_use_unicode = 1
+let g:startify_custom_header =
+            \ 'map(startify#fortune#boxed(), "\"   \".v:val")'
+    " \ 'map(split(system("fortune"), "\n"), \" \". v:val")'
+    " \ 'map(startify#fortune#boxed(), "\"   \".v:val")'
 map <F3> :Startify<CR>
 
 " Install Tagbar
@@ -116,5 +121,14 @@ Plug 'ervandew/supertab'
 
 " Install Sandydune
 Plug 'idbrii/vim-sandydune', { 'dir': '~/.vim/colors/vim-sandydune' }
+
+" Install Solarized
+Plug 'altercation/vim-colors-solarized', { 'dir': '~/.vim/colors/vim-colors-solarized' }
+
+" Install vim-matchquote
+Plug 'airblade/vim-matchquote'
+
+" Install vim-gitgutter
+Plug 'airblade/vim-gitgutter'
 
 call plug#end()
