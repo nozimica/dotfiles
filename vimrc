@@ -183,6 +183,7 @@ let g:netrw_sort_options = 'i'
 
 source ~/.vimrc-plug
 
-let g:startify_fortune_use_unicode = 1
-let g:startify_custom_header =
-    \ 'map(startify#fortune#boxed(), "\"   \".v:val")'
+let mapleader=','
+
+highlight LineNr ctermfg=white ctermbg=grey
+" highlight SignColumn ctermfg=white ctermbg=grey
