@@ -21,3 +21,6 @@ UXTerm*scrollTtyOutput:  false
 XTerm*VT100.charClass: 33:48,35:48,37:48,42:48,45-47:48,64:48,95:48,126:48
 !UXterm*charClass: 33:48,36-47:48,58-59:48,61:48,63-64:48,95:48,126:48
 UXTerm*VT100.charClass: 33:48,35:48,37:48,42:48,45-47:48,64:48,95:48,126:48
+
+XTerm*font:             -*-fixed-medium-r-*-*-13-*-*-*-*-60-iso10646-1
+XTerm*boldFont:         -*-fixed-medium-r-*-*-13-*-*-*-*-60-iso10646-1
