@@ -188,5 +188,9 @@ set cursorline
 highlight clear CursorLine
 highlight CursorLineNR cterm=bold ctermbg=black
 highlight LineNr ctermfg=white ctermbg=DarkGrey guifg=white guibg=DarkGrey
+highlight GitGutterAdd          ctermbg=DarkGrey ctermfg=green  guifg=green  cterm=bold gui=bold
+highlight GitGutterChange       ctermbg=DarkGrey ctermfg=yellow guifg=yellow cterm=bold gui=bold
+highlight GitGutterDelete       ctermbg=DarkGrey ctermfg=red    guifg=red    cterm=bold gui=bold
+highlight GitGutterChangeDelete ctermbg=DarkGrey ctermfg=yellow guifg=yellow cterm=bold gui=bold
 
 source ~/.vimrc-plug
