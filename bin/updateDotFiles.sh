@@ -66,7 +66,7 @@ backup_and_link () {
         echo "Backing up $localDotFile."
         cp $localDotFile $localDotFile.origBeforeUpdateDotFiles
         cp $localDotFile $BACKUP_FOLDER
-        rm $localDotFile
+        rm -f $localDotFile
     fi
 
     # test if target file does not exist yet
