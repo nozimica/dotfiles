@@ -50,16 +50,16 @@ endif
 " tip 91
 set dictionary-=/usr/share/dict/words dictionary+=/usr/share/dict/words
 
-" tip 102
-function InsertTabWrapper()
-    let col = col('.') - 1
-    if !col || getline('.')[col - 1] !~ '\k'
-        return "\<tab>"
-    else
-        return "\<c-p>"
-    endif
-endfunction
-inoremap <tab> <c-r>=InsertTabWrapper()<cr>
+" " tip 102
+" function InsertTabWrapper()
+"     let col = col('.') - 1
+"     if !col || getline('.')[col - 1] !~ '\k'
+"         return "\<tab>"
+"     else
+"         return "\<c-p>"
+"     endif
+" endfunction
+" inoremap <tab> <c-r>=InsertTabWrapper()<cr>
 
 
 "function! CleverTab()
@@ -73,36 +73,19 @@ inoremap <tab> <c-r>=InsertTabWrapper()<cr>
 " tip 64
 map ,cd :cd %:p:h<CR>
 
-"function! JavaScriptFold()
-"    setl foldmethod=syntax
-"    setl foldlevelstart=1
-"    syn region foldBraces start=/{/ end=/}/ transparent fold keepend extend
-"
-"    function! FoldText()
-"        return substitute(getline(v:foldstart), '{.*', '{...}', '')
-"    endfunction
-"    setl foldtext=FoldText()
-"endfunction
-"au FileType javascript call JavaScriptFold()
-""au FileType javascript setl fen
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"" Fix <alt-> mappings when not in xterm
+"" http://stackoverflow.com/a/10216459/677022
+let c='a'
+while c <= 'z'
+  exec "set <A-".c.">=\e".c
+  exec "imap \e".c." <A-".c.">"
+  let c = nr2char(1+char2nr(c))
+endw
 
-" function FileHeading()
-"   let s:line=line(".")
-"   call setline(s:line,"/*")
-"   call append(s:line," * ")
-"   call append(s:line+1," * @name")
-"   "call append(s:line+3," * Fecha - ".strftime("%d %M %Y"))
-"   call append(s:line+2," * @param")
-"   call append(s:line+3," * @param")
-"   call append(s:line+4," * @return")
-"   "call append(s:line+1," * Author: Nicolas E. Ozimica <nozimica@gmail.com>")
-"   "call append(s:line+5," * =============================================================================")
-"   call append(s:line+5," *")
-"   call append(s:line+6," */")
-"   unlet s:line
-" endfunction
-" map <S-F12> <Esc>mz:execute FileHeading()<CR>`zjjA
+set ttimeout ttimeoutlen=50
 
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "" http://www.reddit.com/r/vim/comments/kz84u/what_are_some_simple_yet_mindblowing_tweaks_to/
 "" move a line of text using ALT+[jk], indent with ALT+[hl]
 nnoremap <A-j> :m+<CR>==
@@ -155,7 +138,7 @@ if has('gui_running')
     colorscheme desert
     if has("gui_gtk2")
         " set guifont=DejaVu\ Sans\ Mono\ 8
-        set guifont=Inconsolata\ Medium\ 10
+        set guifont=Fixed\ Medium\ Semi-Condensed\ 10
     elseif has("gui_win32")
         set guifont=Consolas:h8:cANSI
     endif
