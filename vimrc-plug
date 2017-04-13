@@ -143,4 +143,17 @@ let g:gitgutter_async = 0
 let g:gitgutter_realtime = 0
 let g:gitgutter_eager = 0
 
+" " Install YouCompleteMe
+" function! BuildYCM(info)
+"   " info is a dictionary with 3 fields
+"   " - name:   name of the plugin
+"   " - status: 'installed', 'updated', or 'unchanged'
+"   " - force:  set on PlugInstall! or PlugUpdate!
+"   if a:info.status == 'installed' || a:info.force
+"     !./install.py
+"   endif
+" endfunction
+
+" Plug 'Valloric/YouCompleteMe', { 'do': function('BuildYCM') }
+
 call plug#end()
