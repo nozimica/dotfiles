@@ -85,6 +85,7 @@ backup_and_link () {
 }
 
 pack_backup_folder () {
+    echo "Pack and backup folder"
     tar jcf $BACKUP_TBZ -C $DOTFILES_DIR $BACKUP_FOLDER
     rm -rf $BACKUP_FOLDER
 }
@@ -116,44 +117,60 @@ print_msg () {
     echo -e "$(tput setaf 4)$(tput bold)$1$(tput sgr0)"
 }
 
-# Get current dir (so run this script from anywhere)
-export DOTFILES_DIR
-DOTFILES_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+check_reqs () {
+    # Check bzip2
+    check_onereq "bzip2"
+}
 
-# Strip the last directory (this script resides in bin)
-# DOTFILES_DIR="$( realpath ${DOTFILES_DIR}/.. )"
-DOTFILES_DIR="$( readlink -f ${DOTFILES_DIR}/.. )"
+check_onereq () {
+    command -v $1 >/dev/null 2>&1 || { echo >&2 "Program '$1' not found; but it's required. Aborting."; exit 2; }
+}
 
-export BACKUP_FOLDER
-BACKUP_FOLDER=backupFolder
-export BACKUP_TBZ
-THISDATE=`date +%Y-%m-%d`
-BACKUP_TBZ=${DOTFILES_DIR}/${BACKUP_FOLDER}-${THISDATE}.tbz
+main () {
+    # Check for needed programs
+    check_reqs
 
-# if [[ -e "$BACKUP_TBZ" ]]; then
-#     print_error_msg "Backup file '$BACKUP_TBZ' already exists. Check manually."
-#     exit 2
-# fi
+    # Get current dir (so run this script from anywhere)
+    export DOTFILES_DIR
+    DOTFILES_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
-BACKUP_INDEX=0
-while [[ -f $BACKUP_TBZ ]]; do
-    print_error_msg "Backup file '$BACKUP_TBZ' already exists. Checking alternative name."
-    BACKUP_INDEX=$((BACKUP_INDEX + 1))
-    BACKUP_TBZ=${DOTFILES_DIR}/${BACKUP_FOLDER}-${THISDATE}-v${BACKUP_INDEX}.tbz
-    echo "Backup: $BACKUP_TBZ"
-done
+    # Strip the last directory (this script resides in bin)
+    # DOTFILES_DIR="$( realpath ${DOTFILES_DIR}/.. )"
+    DOTFILES_DIR="$( readlink -f ${DOTFILES_DIR}/.. )"
 
-echo ""
-echo "For every file in this repo:"
-echo " - we'll backup your current version;"
-echo " - update it with what is here right now."
-echo ""
+    export BACKUP_FOLDER
+    BACKUP_FOLDER=backupFolder
+    export BACKUP_TBZ
+    THISDATE=`date +%Y-%m-%d`
+    BACKUP_TBZ=${DOTFILES_DIR}/${BACKUP_FOLDER}-${THISDATE}.tbz
 
-print_msg "Working into '$DOTFILES_DIR'."
-echo ""
-print_msg "Update dotfiles itself first."
+    # if [[ -e "$BACKUP_TBZ" ]]; then
+    #     print_error_msg "Backup file '$BACKUP_TBZ' already exists. Check manually."
+    #     exit 2
+    # fi
 
-[ -d "$DOTFILES_DIR/.git" ] && git --work-tree="$DOTFILES_DIR" --git-dir="$DOTFILES_DIR/.git" pull origin master
+    BACKUP_INDEX=0
+    while [[ -f $BACKUP_TBZ ]]; do
+        print_error_msg "Backup file '$BACKUP_TBZ' already exists. Checking alternative name."
+        BACKUP_INDEX=$((BACKUP_INDEX + 1))
+        BACKUP_TBZ=${DOTFILES_DIR}/${BACKUP_FOLDER}-${THISDATE}-v${BACKUP_INDEX}.tbz
+        echo "Backup: $BACKUP_TBZ"
+    done
 
-check_scenario
-install_links
+    echo ""
+    echo "For every file in this repo:"
+    echo " - we'll backup your current version;"
+    echo " - update it with what is here right now."
+    echo ""
+
+    print_msg "Working into '$DOTFILES_DIR'."
+    echo ""
+    print_msg "Update dotfiles itself first."
+
+    [ -d "$DOTFILES_DIR/.git" ] && git --work-tree="$DOTFILES_DIR" --git-dir="$DOTFILES_DIR/.git" pull origin master
+
+    check_scenario
+    install_links
+}
+
+main
