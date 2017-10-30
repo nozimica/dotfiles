@@ -120,6 +120,7 @@ print_msg () {
 check_reqs () {
     # Check bzip2
     check_onereq "bzip2"
+    check_onereq "curl"
 }
 
 check_onereq () {
