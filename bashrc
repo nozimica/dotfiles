@@ -92,6 +92,11 @@ export PDFVIEWER_texdoc=evince
 ###########################################################################
 # environment variables for specific applications and packages
 
+# VIM
+if [ -d $HOME/opt/vim/bin ]; then
+    export PATH=$HOME/opt/vim/bin:$PATH
+fi
+
 # JAVA
 if [ -d $HOME/opt/jdk ]; then
     export JAVA_HOME=$HOME/opt/jdk
