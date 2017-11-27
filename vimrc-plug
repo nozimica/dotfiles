@@ -92,8 +92,12 @@ nmap <c-n>v :vsplit<CR><c-w>l<c-p>
 
 """ Unite
 Plug 'shougo/unite.vim'
+" """ Denite
+" Plug 'shougo/denite.nvim'
 
 """ Vimfiler
+" Powerful file explorer implemented by Vim script
+"     Depends on unite.vim.
 Plug 'shougo/vimfiler.vim'
 
 " let g:vimfiler_tree_leaf_icon = ' '
@@ -117,6 +121,12 @@ let g:easytags_async = 1
 " let g:easytags_syntax_keyword = 'always'     " comment if has bad performance
 " let g:easytags_by_filetype = "~/.vim"
 
+""" Vim-airline
+Plug 'vim-airline/vim-airline'
+let g:airline_powerline_fonts = 1
+let g:Powerline_symbols='unicode'
+let g:airline_skip_empty_sections = 1
+
 "#######################################################
 "# Tab completion
 
@@ -125,6 +135,21 @@ Plug 'ervandew/supertab'
 
 " """ jedi-vim (for Python)
 " git clone --recursive https://github.com/davidhalter/jedi-vim.git
+
+if has('nvim')
+  Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+else
+  Plug 'Shougo/deoplete.nvim'
+  Plug 'roxma/nvim-yarp'
+  Plug 'roxma/vim-hug-neovim-rpc'
+endif
+
+" Use deoplete.
+let g:deoplete#enable_at_startup = 1
+
+Plug 'zchee/deoplete-jedi'
+Plug 'artur-shaik/vim-javacomplete2'
+autocmd FileType java setlocal omnifunc=javacomplete#Complete
 
 "#######################################################
 "# Colors
