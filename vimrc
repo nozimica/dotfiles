@@ -4,8 +4,10 @@ set ts=4
 set shiftwidth=4
 set expandtab
 
-" " pathogen
-" execute pathogen#infect()
+let mapleader=','
+
+set number
+set cursorline
 
 syntax on
 set background=dark
@@ -164,17 +166,10 @@ let g:netrw_keepdir      = 0
 let g:netrw_liststyle    = 3        " make netrw display a tree view
 let g:netrw_sort_options = 'i'
 
-let mapleader=','
-
-set number
-set cursorline
-highlight LineNr ctermfg=white ctermbg=DarkGrey guifg=white guibg=DarkGrey
-highlight GitGutterAdd          ctermbg=DarkGrey ctermfg=green  guifg=green  cterm=bold gui=bold
-highlight GitGutterChange       ctermbg=DarkGrey ctermfg=yellow guifg=yellow cterm=bold gui=bold
-highlight GitGutterDelete       ctermbg=DarkGrey ctermfg=red    guifg=red    cterm=bold gui=bold
-highlight GitGutterChangeDelete ctermbg=DarkGrey ctermfg=yellow guifg=yellow cterm=bold gui=bold
-
-highlight clear CursorLine
-highlight CursorLineNR cterm=bold ctermbg=yellow ctermfg=DarkGrey
+" Uncomment the following to have Vim jump to the last position when
+" reopening a file
+if has("autocmd")
+  au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
+endif
 
 source ~/.vimrc-plug

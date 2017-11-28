@@ -130,8 +130,8 @@ let g:airline_skip_empty_sections = 1
 "#######################################################
 "# Tab completion
 
-""" SuperTab
-Plug 'ervandew/supertab'
+" """ SuperTab
+" Plug 'ervandew/supertab'
 
 " """ jedi-vim (for Python)
 " git clone --recursive https://github.com/davidhalter/jedi-vim.git
@@ -140,16 +140,48 @@ if has('nvim')
   Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 else
   Plug 'Shougo/deoplete.nvim'
+  Plug 'ternjs/tern_for_vim', { 'do': 'npm install' }
   Plug 'roxma/nvim-yarp'
   Plug 'roxma/vim-hug-neovim-rpc'
 endif
 
 " Use deoplete.
 let g:deoplete#enable_at_startup = 1
+if !exists('g:deoplete#omni#input_patterns')
+  let g:deoplete#omni#input_patterns = {}
+endif
+" let g:deoplete#disable_auto_complete = 1
+autocmd InsertLeave,CompleteDone * if pumvisible() == 0 | pclose | endif
 
-Plug 'zchee/deoplete-jedi'
-Plug 'artur-shaik/vim-javacomplete2'
-autocmd FileType java setlocal omnifunc=javacomplete#Complete
+" omnifuncs
+augroup omnifuncs
+  autocmd!
+  autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
+  autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
+  autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
+  autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
+  autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
+augroup end
+" tern
+if exists('g:plugs["tern_for_vim"]')
+  let g:tern_show_argument_hints = 'on_hold'
+  let g:tern_show_signature_in_pum = 1
+  autocmd FileType javascript setlocal omnifunc=tern#Complete
+endif
+
+" deoplete tab-complete
+inoremap <expr><tab> pumvisible() ? "\<c-n>" : "\<tab>"
+" tern
+autocmd FileType javascript nnoremap <silent> <buffer> gb :TernDef<CR>
+
+" Plug 'zchee/deoplete-jedi'
+" Plug 'artur-shaik/vim-javacomplete2'
+" autocmd FileType java setlocal omnifunc=javacomplete#Complete
+
+" " Enable jedi source debug messages
+" let g:deoplete#enable_profile = 1
+" call deoplete#enable_logging('DEBUG', 'deoplete.log')
+" call deoplete#custom#source('jedi', 'debug_enabled', 1)
 
 "#######################################################
 "# Colors
@@ -172,6 +204,15 @@ Plug 'airblade/vim-gitgutter'
 let g:gitgutter_async = 0
 let g:gitgutter_realtime = 0
 let g:gitgutter_eager = 0
+
+highlight LineNr ctermfg=white ctermbg=DarkGrey guifg=white guibg=DarkGrey
+highlight GitGutterAdd          ctermbg=DarkGrey ctermfg=green  guifg=green  cterm=bold gui=bold
+highlight GitGutterChange       ctermbg=DarkGrey ctermfg=yellow guifg=yellow cterm=bold gui=bold
+highlight GitGutterDelete       ctermbg=DarkGrey ctermfg=red    guifg=red    cterm=bold gui=bold
+highlight GitGutterChangeDelete ctermbg=DarkGrey ctermfg=yellow guifg=yellow cterm=bold gui=bold
+
+highlight clear CursorLine
+highlight CursorLineNR cterm=bold ctermbg=yellow ctermfg=DarkGrey
 
 " """ YouCompleteMe
 " function! BuildYCM(info)
