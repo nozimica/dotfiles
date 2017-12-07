@@ -186,4 +186,7 @@ let g:gitgutter_eager = 0
 
 " Plug 'Valloric/YouCompleteMe', { 'do': function('BuildYCM') }
 
+""" Tabber
+Plug 'fweep/vim-tabber'
+
 call plug#end()
