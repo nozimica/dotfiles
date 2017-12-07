@@ -189,4 +189,7 @@ let g:gitgutter_eager = 0
 """ Tabber
 Plug 'fweep/vim-tabber'
 
+set tabline=%!tabber#TabLine()
+
+
 call plug#end()
