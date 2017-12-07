@@ -136,20 +136,20 @@ Plug 'ervandew/supertab'
 " """ jedi-vim (for Python)
 " git clone --recursive https://github.com/davidhalter/jedi-vim.git
 
-if has('nvim')
-  Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-else
-  Plug 'Shougo/deoplete.nvim'
-  Plug 'roxma/nvim-yarp'
-  Plug 'roxma/vim-hug-neovim-rpc'
-endif
+" if has('nvim')
+"   Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+" else
+"   Plug 'Shougo/deoplete.nvim'
+"   Plug 'roxma/nvim-yarp'
+"   Plug 'roxma/vim-hug-neovim-rpc'
+" endif
 
-" Use deoplete.
-let g:deoplete#enable_at_startup = 1
+" " Use deoplete.
+" let g:deoplete#enable_at_startup = 1
 
-Plug 'zchee/deoplete-jedi'
-Plug 'artur-shaik/vim-javacomplete2'
-autocmd FileType java setlocal omnifunc=javacomplete#Complete
+" Plug 'zchee/deoplete-jedi'
+" Plug 'artur-shaik/vim-javacomplete2'
+" autocmd FileType java setlocal omnifunc=javacomplete#Complete
 
 "#######################################################
 "# Colors
