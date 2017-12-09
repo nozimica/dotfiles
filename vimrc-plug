@@ -26,6 +26,10 @@ Plug 'sjl/gundo.vim'
 nnoremap <F5> :GundoToggle<CR>
 let g:gundo_prefer_python3 = 1
 
+""" Tabber
+Plug 'fweep/vim-tabber'
+set tabline=%!tabber#TabLine()
+
 """ Dispatch
 " asynchronous build and test dispatcher
 Plug 'tpope/vim-dispatch'
@@ -126,6 +130,7 @@ Plug 'vim-airline/vim-airline'
 let g:airline_powerline_fonts = 1
 let g:Powerline_symbols='unicode'
 let g:airline_skip_empty_sections = 1
+" let g:airline#extensions#tabline#enabled = 1
 
 "#######################################################
 "# Tab completion
@@ -186,10 +191,9 @@ let g:gitgutter_eager = 0
 
 " Plug 'Valloric/YouCompleteMe', { 'do': function('BuildYCM') }
 
-""" Tabber
-Plug 'fweep/vim-tabber'
-
-set tabline=%!tabber#TabLine()
+""" csv.vim
+Plug 'chrisbra/csv.vim'
+let g:csv_delim=';'
 
 
 call plug#end()
