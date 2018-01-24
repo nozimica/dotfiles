@@ -195,5 +195,7 @@ let g:gitgutter_eager = 0
 Plug 'chrisbra/csv.vim'
 let g:csv_delim=';'
 
+""" AnsiEsc
+Plug 'jbnicolai/vim-AnsiEsc'
 
 call plug#end()
