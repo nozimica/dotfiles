@@ -7,7 +7,6 @@ set expandtab
 " " pathogen
 " execute pathogen#infect()
 
-syntax on
 set background=dark
 " colorscheme solarized
 " let g:solarized_termcolors=256
@@ -16,6 +15,7 @@ set autoindent
 " set smartindent
 filetype on
 filetype plugin indent on
+syntax on
 " set cindent
 set mouse=a
 "set ttymouse=xterm2
