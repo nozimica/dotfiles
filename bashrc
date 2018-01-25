@@ -110,15 +110,17 @@ if [ -d $HOME/opt/jdk ]; then
 fi
 
 # Anaconda paths
-if [ -d $HOME/opt/anaconda3/bin ]; then
-    export PYTHONNOUSERSITE=True
-    export PATH=$HOME/opt/anaconda3/bin:$PATH
-elif [ -d $HOME/opt/anaconda2/bin ]; then
-    export PYTHONNOUSERSITE=True
-    export PATH=$HOME/opt/anaconda2/bin:$PATH
-elif [ -d $HOME/.local/bin ]; then
-    export PATH=$HOME/.local/bin:$PATH
-fi
+function loadAnaconda {
+    if [ -d $HOME/opt/anaconda3/bin ]; then
+        export PYTHONNOUSERSITE=True
+        export PATH=$HOME/opt/anaconda3/bin:$PATH
+    elif [ -d $HOME/opt/anaconda2/bin ]; then
+        export PYTHONNOUSERSITE=True
+        export PATH=$HOME/opt/anaconda2/bin:$PATH
+    elif [ -d $HOME/.local/bin ]; then
+        export PATH=$HOME/.local/bin:$PATH
+    fi
+}
 
 # GEMS
 if [ -d $HOME/.gem/ruby/1.9.1 ]; then
