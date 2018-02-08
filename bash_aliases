@@ -45,3 +45,8 @@ alias cal='cal -m'
 alias gcal='gcal -s 1'
 
 alias listFailedPasswords="sudo zgrep -h 'Failed password' /var/log/auth.* | grep sshd | awk '{print $1,$2}' | sort -k 1,1M -k 2n | uniq -c"
+
+## For Terminator
+setWindowTitle() {
+    echo -ne "\033]0; ${1} \007"
+}
