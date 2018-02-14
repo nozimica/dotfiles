@@ -198,4 +198,7 @@ let g:csv_delim=';'
 """ AnsiEsc
 Plug 'jbnicolai/vim-AnsiEsc'
 
+""" Vim-scala
+Plug 'derekwyatt/vim-scala'
+
 call plug#end()
