@@ -118,12 +118,14 @@ Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 " let g:autotagTagsFile="~/.vim/.tags"
 " let g:autotagDisabled=0
 
-Plug 'xolox/vim-easytags'
-Plug 'xolox/vim-misc'
-let g:easytags_file = "~/.vim/.tags"
-let g:easytags_async = 1
-" let g:easytags_syntax_keyword = 'always'     " comment if has bad performance
-" let g:easytags_by_filetype = "~/.vim"
+if executable('ctags')
+    Plug 'xolox/vim-easytags'
+    Plug 'xolox/vim-misc'
+    let g:easytags_file = "~/.vim/.tags"
+    let g:easytags_async = 1
+    " let g:easytags_syntax_keyword = 'always'     " comment if has bad performance
+    " let g:easytags_by_filetype = "~/.vim"
+endif
 
 """ Vim-airline
 Plug 'vim-airline/vim-airline'
