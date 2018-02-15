@@ -162,3 +162,26 @@ if ! shopt -oq posix; then
 fi
 
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
+
+###########################################################################
+# directory changer
+#
+function cds() {
+    if [ -f $HOME/.bash_workingdirs ] ; then
+        mapfile -t dirsArr < $HOME/.bash_workingdirs
+        dirsArrLen=${#dirsArr[@]}
+
+        echo "     ---------------------------------------------------------------------------"
+        echo "     Working directories:"
+        echo ""
+        for (( i=1; i<${dirsArrLen}+1; i++ )); do
+            printf "     %2d %s\n" ${i} "${dirsArr[$i-1]}"
+        done
+        echo ""
+        echo -n "     Select dir index: "
+        read dirFromUser
+        echo ""
+        # echo "..${dirsArr[${dirFromUser}-1]}.."
+        cd "${dirsArr[${dirFromUser}-1]}"
+    fi
+}
