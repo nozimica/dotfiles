@@ -1,0 +1,28 @@
+###########################################################################
+# aliases for Hadoop
+
+alias hhls='hadoop fs -ls'
+alias hhdf='hadoop fs -df'
+alias hhdu='hadoop fs -du'
+alias hhmv='hadoop fs -mv'
+alias hhcat='hadoop fs -text'
+alias hhtext='hadoop fs -text'
+alias hhput='hadoop fs -put'
+alias hhget='hadoop fs -get'
+alias hhcfl='hadoop fs -copyFromLocal'
+alias hhctl='hadoop fs -copyToLocal'
+alias hhmkdir='hadoop fs -mkdir'
+
+alias kinitbe="kinit nozimica@DESA.BESTADO.CL -k -t ~/etc/keys/nozimica.keytab"
+
+###########################################################################
+# loader for Java 8
+#
+# Java8 paths
+function loadJava8 {
+    if [ -d /usr/java/jdk1.8.0_151 ]; then
+        export JAVA_HOME=/usr/java/jdk1.8.0_151
+        export PATH=$JAVA_HOME/bin:$PATH
+        export CLASSPATH=.:$JAVA_HOME/jre/lib/ext:$JAVA_HOME/lib/tools.jar
+    fi
+}
