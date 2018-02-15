@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/usr/bin/envbash
 
 ## Inspired from (among others):
 # https://github.com/zhimsel/dotfiles/blob/master/install.sh
@@ -20,7 +20,7 @@ dfiles=(\
 declare -A commfiles=(\
     ["Xresources"]="xrdb -merge ~/.Xresources" \
     ["gitconfig"]="gitconfigfunc" \
-    ["vimrc-plug"]="./bin/installingVimPluginsPlug.sh" \
+    ["vimrc-plug"]="../lib/installingVimPluginsPlug.sh" \
 )
 function gitconfigfunc() {
     read -p 'Ingrese su email para git: ' gitemail
