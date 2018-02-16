@@ -169,13 +169,15 @@ fi
 function cds() {
     if [ -f $HOME/.bash_workingdirs ] ; then
         mapfile -t dirsArr < $HOME/.bash_workingdirs
-        dirsArrLen=${#dirsArr[@]}
+        local dirsArrLen=${#dirsArr[@]}
 
         echo "     ---------------------------------------------------------------------------"
         echo "     Working directories:"
         echo ""
+        local specialLine="·································································"
         for (( i=1; i<${dirsArrLen}+1; i++ )); do
-            printf "     %2d %s\n" ${i} "${dirsArr[$i-1]}"
+            local thisDir=${dirsArr[$i-1]}
+            printf "     %2d %s %s %2d\n" ${i} "${thisDir}" "${specialLine:${#thisDir}}" ${i}
         done
         echo ""
         echo -n "     Select dir index: "
