@@ -8,8 +8,6 @@ set expandtab
 " execute pathogen#infect()
 
 set background=dark
-" colorscheme solarized
-" let g:solarized_termcolors=256
 
 set autoindent
 " set smartindent
@@ -178,3 +176,5 @@ highlight clear CursorLine
 highlight CursorLineNR cterm=bold ctermbg=yellow ctermfg=DarkGrey
 
 source ~/.vimrc-plug
+
+colorscheme solarized8
