@@ -52,3 +52,19 @@ alias listFailedPasswords="sudo zgrep -h 'Failed password' /var/log/auth.* | gre
 setWindowTitle() {
     echo -ne "\033]0; ${1} \007"
 }
+
+## Sets window title related to a ssh alias.
+##
+## The title will have a prefix and a number (taken from tty to avoid collisions).
+##
+## @param sshAlias      An ssh alias or a ssh server.
+## @param sshPrefix     The text that will be displayed at title bar (with a counter).
+sshSetTitle() {
+    local sshAlias=${1:?"ssh alias must be given. Aborting."}
+    local sshPrefix=${2:?"prefix must be given. Aborting."}
+    local thisTty=$(tty)
+    thisTty=$(printf '%02d' ${thisTty##*/})
+    setWindowTitle "${sshPrefix}${thisTty}"
+    ssh ${sshAlias}
+    setWindowTitle $(printf '%s%02d' $(hostname) ${thisTty})
+}
