@@ -1,0 +1,22 @@
+[global_config]
+  dbus = False
+[keybindings]
+  layout_launcher = None
+[layouts]
+  [[default]]
+    [[[child1]]]
+      parent = window0
+      type = Terminal
+    [[[window0]]]
+      parent = ""
+      type = Window
+[plugins]
+[profiles]
+  [[default]]
+    background_darkness = 0.93
+    background_type = transparent
+    cursor_color = "#aaaaaa"
+    font = Fixed Medium Semi-Condensed 10
+    foreground_color = "#00ff00"
+    show_titlebar = False
+    use_system_font = False
