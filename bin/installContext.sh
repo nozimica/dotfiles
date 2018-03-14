@@ -1,4 +1,4 @@
-#!/usr/bin/bash
+#!/bin/bash
 
 ### TODO: avoid not DRY code
 # Get current dir (so run this script from anywhere)
@@ -11,7 +11,7 @@ DOTFILES_DIR="$( readlink -f ${DOTFILES_DIR}/.. )"
 
 if [[ ! -z $1 ]] ; then
     if [[ $1 == 'hadoop' ]] ; then
-        thisAliasFile="$HOME/.bash_aliases.local"
+        thisAliasFile="$HOME/.bash_aliases.context"
         hadoopAliasFile="$DOTFILES_DIR/context/bash_aliases_hadoop"
         echo $thisAliasFile
         echo $hadoopAliasFile
