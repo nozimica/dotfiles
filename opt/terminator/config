@@ -18,5 +18,6 @@
     cursor_color = "#aaaaaa"
     font = Fixed Medium Semi-Condensed 10
     foreground_color = "#00ff00"
+    scrollback_lines = 2500
     show_titlebar = False
     use_system_font = False
