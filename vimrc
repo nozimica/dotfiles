@@ -178,3 +178,6 @@ highlight CursorLineNR cterm=bold ctermbg=yellow ctermfg=DarkGrey
 source ~/.vimrc-plug
 
 colorscheme solarized8
+
++au BufNewFile,BufRead *.hql set filetype=hive expandtab
++au BufNewFile,BufRead *.q set filetype=hive expandtab
