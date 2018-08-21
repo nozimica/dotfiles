@@ -16,6 +16,9 @@ HISTFILESIZE=2000
 # update the values of LINES and COLUMNS.
 shopt -s checkwinsize
 
+# turn off suspend and resume CTRL-s
+stty -ixon
+
 # set vi bindings for command line editing
 set -o vi
 
