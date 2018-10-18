@@ -1,4 +1,4 @@
-#!/usr/bin/envbash
+#!/usr/bin/env bash
 
 ## Inspired from (among others):
 # https://github.com/zhimsel/dotfiles/blob/master/install.sh
