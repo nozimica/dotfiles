@@ -125,6 +125,20 @@ function loadAnaconda {
     fi
 }
 
+# Miniconda paths
+function loadMiniconda {
+    if [ -d $HOME/opt/miniconda3/bin ]; then
+        export PYTHONNOUSERSITE=True
+        export PATH=$HOME/opt/miniconda3/bin:$PATH
+        #source $HOME/opt/miniconda3/etc/profile.d/conda.sh
+    elif [ -d $HOME/opt/miniconda2/bin ]; then
+        export PYTHONNOUSERSITE=True
+        export PATH=$HOME/opt/miniconda2/bin:$PATH
+    elif [ -d $HOME/.local/bin ]; then
+        export PATH=$HOME/.local/bin:$PATH
+    fi
+}
+
 # GEMS
 if [ -d $HOME/.gem/ruby/1.9.1 ]; then
     export PATH=$HOME/.gem/ruby/1.9.1/bin:$PATH
@@ -133,6 +147,11 @@ fi
 # Cabal
 if [ -d $HOME/.cabal ]; then
     export PATH=$HOME/.cabal/bin:$PATH
+fi
+
+# Nodejs
+if [ -d $HOME/opt/nodejs ]; then
+    export PATH=$HOME/opt/nodejs/bin:$PATH
 fi
 
 
