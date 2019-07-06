@@ -208,5 +208,6 @@ Plug 'derekwyatt/vim-scala'
 
 """ Solarized
 Plug 'lifepillar/vim-solarized8'
+let g:solarized_italics = 0
 
 call plug#end()
