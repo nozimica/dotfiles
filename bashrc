@@ -116,13 +116,34 @@ fi
 function loadAnaconda {
     if [ -d $HOME/opt/anaconda3/bin ]; then
         export PYTHONNOUSERSITE=True
-        export PATH=$HOME/opt/anaconda3/bin:$PATH
+        # export PATH=$HOME/opt/anaconda3/bin:$PATH
+        initializeAnaconda $HOME/opt/anaconda3
     elif [ -d $HOME/opt/anaconda2/bin ]; then
         export PYTHONNOUSERSITE=True
-        export PATH=$HOME/opt/anaconda2/bin:$PATH
+        # export PATH=$HOME/opt/anaconda2/bin:$PATH
+        initializeAnaconda $HOME/opt/anaconda2
     elif [ -d $HOME/.local/bin ]; then
         export PATH=$HOME/.local/bin:$PATH
     fi
+}
+
+function initializeAnaconda {
+    # >>> conda initialize >>>
+    # $1 is the path to conda directory
+    #
+    # !! Contents within this block are managed by 'conda init' !!
+    __conda_setup=$("${1}/bin/conda" 'shell.bash' 'hook' 2> /dev/null)
+    if [ $? -eq 0 ]; then
+        eval "$__conda_setup"
+    else
+        if [ -f "${1}/etc/profile.d/conda.sh" ]; then
+            . "${1}/etc/profile.d/conda.sh"
+        else
+            export PATH="${1}/bin:$PATH"
+        fi
+    fi
+    unset __conda_setup
+    # <<< conda initialize <<<
 }
 
 # Miniconda paths
