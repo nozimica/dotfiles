@@ -161,8 +161,8 @@ function loadMiniconda {
 }
 
 # GEMS
-if [ -d $HOME/.gem/ruby/1.9.1 ]; then
-    export PATH=$HOME/.gem/ruby/1.9.1/bin:$PATH
+if [ -d $HOME/.gem/ruby/2.3.0 ]; then
+    export PATH=$HOME/.gem/ruby/2.3.0/bin:$PATH
 fi
 
 # Cabal
