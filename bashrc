@@ -170,6 +170,11 @@ if [ -d $HOME/.cabal ]; then
     export PATH=$HOME/.cabal/bin:$PATH
 fi
 
+# Pandoc standalone
+if [ -d $HOME/opt/pandoc ]; then
+    export PATH=$HOME/opt/pandoc/bin:$PATH
+fi
+
 # Nodejs
 if [ -d $HOME/opt/nodejs ]; then
     export PATH=$HOME/opt/nodejs/bin:$PATH
