@@ -116,12 +116,16 @@ fi
 function loadAnaconda {
     if [ -d $HOME/opt/anaconda3/bin ]; then
         export PYTHONNOUSERSITE=True
-        # export PATH=$HOME/opt/anaconda3/bin:$PATH
         initializeAnaconda $HOME/opt/anaconda3
     elif [ -d $HOME/opt/anaconda2/bin ]; then
         export PYTHONNOUSERSITE=True
-        # export PATH=$HOME/opt/anaconda2/bin:$PATH
         initializeAnaconda $HOME/opt/anaconda2
+    elif [ -d $HOME/opt/miniconda3/bin ]; then
+        export PYTHONNOUSERSITE=True
+        initializeAnaconda $HOME/opt/miniconda3
+    elif [ -d $HOME/opt/miniconda2/bin ]; then
+        export PYTHONNOUSERSITE=True
+        initializeAnaconda $HOME/opt/miniconda2
     elif [ -d $HOME/.local/bin ]; then
         export PATH=$HOME/.local/bin:$PATH
     fi
@@ -144,20 +148,6 @@ function initializeAnaconda {
     fi
     unset __conda_setup
     # <<< conda initialize <<<
-}
-
-# Miniconda paths
-function loadMiniconda {
-    if [ -d $HOME/opt/miniconda3/bin ]; then
-        export PYTHONNOUSERSITE=True
-        export PATH=$HOME/opt/miniconda3/bin:$PATH
-        #source $HOME/opt/miniconda3/etc/profile.d/conda.sh
-    elif [ -d $HOME/opt/miniconda2/bin ]; then
-        export PYTHONNOUSERSITE=True
-        export PATH=$HOME/opt/miniconda2/bin:$PATH
-    elif [ -d $HOME/.local/bin ]; then
-        export PATH=$HOME/.local/bin:$PATH
-    fi
 }
 
 # GEMS
