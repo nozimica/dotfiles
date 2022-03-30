@@ -46,7 +46,7 @@ backup_and_link () {
 
     # Check if source dotfile exists
     if [[ ! -e "$DOTFILES_DIR/$thisFile" ]]; then
-        print_error_msg "$thisFile doesn't exist."
+        print_error_msg "$DOTFILES_DIR/$thisFile doesn't exist."
         exit 2
     fi
 
@@ -137,7 +137,8 @@ main () {
 
     # Strip the last directory (this script resides in bin)
     # DOTFILES_DIR="$( realpath ${DOTFILES_DIR}/.. )"
-    DOTFILES_DIR="$( readlink -f ${DOTFILES_DIR}/.. )"
+    DOTFILES_DIR="$(dirname "$DOTFILES_DIR")"
+    echo ${DOTFILES_DIR}
 
     export BACKUP_FOLDER
     BACKUP_FOLDER=backupFolder
