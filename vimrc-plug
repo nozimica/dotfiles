@@ -35,11 +35,11 @@ set tabline=%!tabber#TabLine()
 Plug 'tpope/vim-dispatch'
 
 """ SnipMate
-Plug 'tomtom/tlib_vim'
-Plug 'MarcWeber/vim-addon-mw-utils'
-Plug 'garbas/vim-snipmate'
-" Optional:
-Plug 'honza/vim-snippets'
+" Plug 'tomtom/tlib_vim'
+" Plug 'MarcWeber/vim-addon-mw-utils'
+" Plug 'garbas/vim-snipmate'
+" " Optional:
+" Plug 'honza/vim-snippets'
 
 " """ flake8
 " easy_install --user flake8
@@ -168,7 +168,7 @@ Plug 'ervandew/supertab'
 " [ ! -d ~/.vim/colors ] && mkdir ~/.vim/colors
 
 """ Sandydune
-Plug 'idbrii/vim-sandydune', { 'dir': '~/.vim/colors/vim-sandydune' }
+" Plug 'idbrii/vim-sandydune', { 'dir': '~/.vim/colors/vim-sandydune' }
 
 """ Solarized
 Plug 'altercation/vim-colors-solarized', { 'dir': '~/.vim/colors/vim-colors-solarized' }

@@ -1,6 +1,11 @@
 ###########################################################################
 # shell special variables
 
+# Source global definitions
+if [ -f /etc/bashrc ]; then
+	. /etc/bashrc
+fi
+
 # ignore both duplicate lines or lines starting with space in the history,
 # See bash(1) for more options
 HISTCONTROL=ignoreboth
@@ -50,6 +55,7 @@ fi
 
 if [ "$color_prompt" = yes ]; then
     PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
+    # PS1="[\u@\h \[\e[32m\]\w \[\e[91m\]\$(parse_git_branch)\[\e[00m\]]$ "
 else
     PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w\$ '
 fi
@@ -147,6 +153,10 @@ function initializeAnaconda {
         fi
     fi
     unset __conda_setup
+    # disable init of env "base"
+    if command -v conda &>/dev/null; then
+        conda config --set auto_activate_base false
+    fi
     # <<< conda initialize <<<
 }
 
@@ -213,10 +223,10 @@ function cds() {
         mapfile -t dirsArr < $HOME/.bash_workingdirs
         local dirsArrLen=${#dirsArr[@]}
 
-        echo "     ---------------------------------------------------------------------------"
+        echo "     ---------------------------------------------------------------------------------"
         echo "     Working directories:"
         echo ""
-        local specialLine="·································································"
+        local specialLine="··········································································"
         for (( i=1; i<${dirsArrLen}+1; i++ )); do
             local thisDir=${dirsArr[$i-1]}
             printf "     %2d %s %s %2d\n" ${i} "${thisDir}" "${specialLine:${#thisDir}}" ${i}
@@ -226,6 +236,7 @@ function cds() {
         read dirFromUser
         echo ""
         # echo "..${dirsArr[${dirFromUser}-1]}.."
-        cd "${dirsArr[${dirFromUser}-1]}"
+        local destinationDir="${dirsArr[${dirFromUser}-1]/#~/$HOME}"
+        cd -- "${destinationDir}"
     fi
 }
