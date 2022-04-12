@@ -1,6 +1,7 @@
 [user]
 	name = Nicolás E. Ozimica
-	email = 
+[include]
+    path = ~/.gitconfig.local
 [core]
 	editor = vim
 	; pager = less -F -X
