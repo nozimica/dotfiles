@@ -219,24 +219,32 @@ fi
 # directory changer
 #
 function cds() {
-    if [ -f $HOME/.bash_workingdirs ] ; then
+    if [[ -f $HOME/.bash_workingdirs ]] ; then
+        local dirFromUser=-1
         mapfile -t dirsArr < $HOME/.bash_workingdirs
         local dirsArrLen=${#dirsArr[@]}
-
-        echo "     ---------------------------------------------------------------------------------"
-        echo "     Working directories:"
-        echo ""
-        local specialLine="··········································································"
-        for (( i=1; i<${dirsArrLen}+1; i++ )); do
-            local thisDir=${dirsArr[$i-1]}
-            printf "     %2d %s %s %2d\n" ${i} "${thisDir}" "${specialLine:${#thisDir}}" ${i}
-        done
-        echo ""
-        echo -n "     Select dir index: "
-        read dirFromUser
-        echo ""
-        # echo "..${dirsArr[${dirFromUser}-1]}.."
-        local destinationDir="${dirsArr[${dirFromUser}-1]/#~/$HOME}"
-        cd -- "${destinationDir}"
+        if [[ $# == 1 ]] ; then
+            dirFromUser=$1
+        else
+            echo "     ---------------------------------------------------------------------------------"
+            echo "     Working directories:"
+            echo ""
+            local specialLine="··········································································"
+            for (( i=1; i<${dirsArrLen}+1; i++ )); do
+                local thisDir=${dirsArr[$i-1]}
+                printf "     %2d %s %s %2d\n" ${i} "${thisDir}" "${specialLine:${#thisDir}}" ${i}
+            done
+            echo ""
+            echo -n "     Select dir index: "
+            read dirFromUser
+            echo ""
+        fi
+        if [[ ${dirFromUser} -ge 1 ]] && [[ ${dirFromUser} -le ${dirsArrLen} ]] ; then
+            echo "..${dirsArr[${dirFromUser}-1]}.."
+            local destinationDir="${dirsArr[${dirFromUser}-1]/#~/$HOME}"
+            cd -- "${destinationDir}"
+        else
+            echo "Wrong index."
+        fi
     fi
 }
