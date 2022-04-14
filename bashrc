@@ -89,14 +89,9 @@ export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quo
 ###########################################################################
 # export custom env vars
 
-export TEXLIVE_HOME=$HOME/opt/TexLive
 export PATH=$HOME/bin:$PATH
-export PATH=$TEXLIVE_HOME/bin/x86_64-linux:$PATH
 export PATH=$HOME/usr/bin:$PATH
 export PATH=$HOME/.local/bin:$PATH
-export MANPATH=/usr/share/man:/usr/local/man:/usr/local/share/man:$TEXLIVE_HOME/texmf/doc/man
-#export INFOPATH=$TEXLIVE_HOME/texmf/doc/info:$INFOPATH
-export PDFVIEWER_texdoc=evince
 
 ###########################################################################
 # environment variables for specific applications and packages
@@ -104,6 +99,15 @@ export PDFVIEWER_texdoc=evince
 # VIM
 if [ -d $HOME/opt/vim/bin ]; then
     export PATH=$HOME/opt/vim/bin:$PATH
+fi
+
+# TexLive
+if [ -d $HOME/opt/TexLive ]; then
+    export TEXLIVE_HOME=$HOME/opt/TexLive
+    export PATH=$TEXLIVE_HOME/bin/x86_64-linux:$PATH
+    export MANPATH=$TEXLIVE_HOME/texmf-dist/doc/man:/usr/share/man:/usr/local/man:/usr/local/share/man:$MANPATH
+    export INFOPATH=$TEXLIVE_HOME/texmf-dist/doc/info:$INFOPATH
+    export PDFVIEWER_texdoc=evince
 fi
 
 # JAVA
