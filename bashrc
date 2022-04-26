@@ -222,33 +222,57 @@ fi
 ###########################################################################
 # directory changer
 #
-function cds() {
-    if [[ -f $HOME/.bash_workingdirs ]] ; then
-        local dirFromUser=-1
-        mapfile -t dirsArr < $HOME/.bash_workingdirs
+function newcds() {
+    local source_file="${HOME}/.bash_workingdirs"
+    if [[ -f ${source_file} ]] ; then
+        local user_selection
+        local dirsArr
+        read_options_from_file ${source_file} dirsArr
         local dirsArrLen=${#dirsArr[@]}
         if [[ $# == 1 ]] ; then
-            dirFromUser=$1
+            user_selection=$1
         else
-            echo "     ---------------------------------------------------------------------------------"
-            echo "     Working directories:"
-            echo ""
-            local specialLine="··········································································"
-            for (( i=1; i<${dirsArrLen}+1; i++ )); do
-                local thisDir=${dirsArr[$i-1]}
-                printf "     %2d %s %s %2d\n" ${i} "${thisDir}" "${specialLine:${#thisDir}}" ${i}
-            done
-            echo ""
-            echo -n "     Select dir index: "
-            read dirFromUser
-            echo ""
+            selection_picker "Working directories:" dirsArr user_selection
         fi
-        if [[ ${dirFromUser} -ge 1 ]] && [[ ${dirFromUser} -le ${dirsArrLen} ]] ; then
-            echo "..${dirsArr[${dirFromUser}-1]}.."
-            local destinationDir="${dirsArr[${dirFromUser}-1]/#~/$HOME}"
+        if [[ ${user_selection} -ge 1 ]] && [[ ${user_selection} -le ${dirsArrLen} ]] ; then
+            echo "..${dirsArr[${user_selection}-1]}.."
+            local destinationDir="${dirsArr[${user_selection}-1]/#~/$HOME}"
             cd -- "${destinationDir}"
         else
             echo "Wrong index."
         fi
+    fi
+}
+
+function selection_picker() {
+    if [[ $# != 3 ]] ; then
+        return
+    fi
+    local sel_title=$1
+    local -n sel_options=$2
+    local -n user_selection_inner=$3
+    local sel_num_options=${#sel_options[@]}
+    local top_separator=`printf -- '-%.0s' {1..82}`
+    local left_margin=`printf -- ' %.0s' {1..4}`
+    local specialLine=`printf -- '·%.0s' {1..74}`
+    echo "${left_margin}${top_separator}"
+    echo "${left_margin}${sel_title}"
+    echo ""
+    for (( i=1; i<${sel_num_options}+1; i++ )); do
+        local thisDir=${sel_options[$i-1]}
+        printf "%s%2d %s %s %2d\n" "${left_margin}" ${i} "${thisDir}" "${specialLine:${#thisDir}}" ${i}
+    done
+    echo ""
+    echo -n "${left_margin}Select index: "
+    read user_selection_inner
+    echo ""
+}
+
+function read_options_from_file() {
+    local this_file=$1
+    local -n arr=$2
+    echo "..." ${this_file}
+    if [[ -f ${this_file} ]] ; then
+        mapfile -t arr < ${this_file}
     fi
 }
