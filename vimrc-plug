@@ -182,6 +182,8 @@ Plug 'airblade/vim-gitgutter'
 let g:gitgutter_async = 0
 let g:gitgutter_realtime = 0
 let g:gitgutter_eager = 0
+nmap <Leader>hj <Plug>(GitGutterNextHunk)
+nmap <Leader>hk <Plug>(GitGutterPrevHunk)
 
 " """ YouCompleteMe
 " function! BuildYCM(info)
