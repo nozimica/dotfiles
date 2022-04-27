@@ -222,7 +222,7 @@ fi
 ###########################################################################
 # directory changer
 #
-function newcds() {
+function cds() {
     local source_file="${HOME}/.bash_workingdirs"
     if [[ -f ${source_file} ]] ; then
         local user_selection
