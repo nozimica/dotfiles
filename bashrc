@@ -220,6 +220,37 @@ fi
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
 
 ###########################################################################
+# Miscelanneous
+C_CLEAR="\033c"                       # Clear screen
+C_BOLD="\e[1m"                        # Bold
+C_DEFAULT="\e[0m"                        # Return to default
+
+# Colors
+C_FG_BLUE="\e[38;05;25m"              # Blue
+C_FG_WHITE="\e[38;05;255m"            # White
+C_FG_RED="\e[38;05;196m"              # Red
+
+C_FG_YELLOW="\e[38;05;100m"           # Yellow fg
+C_BG_YELLOW="\e[48;05;100;255m"       # Yellow bg, white fg
+
+# Corners
+C_TL="\x1b(0\x6c\x1b(B"               # Top left corner      (
+C_TR="\x1b(0\x6b\x1b(B"               # Top right corner     )
+C_BL="\x1b(0\x6d\x1b(B"               # Bottom left corner   {
+C_BR="\x1b(0\x6a\x1b(B"               # Bottom right corner  }
+
+# Lines
+C_HR="\x1b(0\x71\x1b(B"               # Horizontal line      -
+C_VR="\x1b(0\x78\x1b(B"               # Vertical line        |
+
+# Connectors
+C_C1="\x1b(0\x74\x1b(B"               # Connector |-         <
+C_C2="\x1b(0\x75\x1b(B"               # Connector -|         >
+C_C3="\x1b(0\x6e\x1b(B"               # Connector +          +
+C_C4="\x1b(0\x77\x1b(B"               # Connector T          T
+C_C5="\x1b(0\x76\x1b(B"               # Connector flipped T  t
+
+###########################################################################
 # directory changer
 #
 function cds() {
@@ -238,6 +269,8 @@ function cds() {
             echo "..${dirsArr[${user_selection}-1]}.."
             local destinationDir="${dirsArr[${user_selection}-1]/#~/$HOME}"
             cd -- "${destinationDir}"
+        elif [[ ${user_selection} == "" ]] ; then
+            echo "Operation aborted."
         else
             echo "Wrong index."
         fi
@@ -248,20 +281,28 @@ function selection_picker() {
     if [[ $# != 3 ]] ; then
         return
     fi
-    local sel_title=$1
+    local sel_title=" $1"
     local -n sel_options=$2
     local -n user_selection_inner=$3
     local sel_num_options=${#sel_options[@]}
-    local top_separator=`printf -- '-%.0s' {1..82}`
-    local left_margin=`printf -- ' %.0s' {1..4}`
-    local specialLine=`printf -- '·%.0s' {1..74}`
-    echo "${left_margin}${top_separator}"
-    echo "${left_margin}${sel_title}"
-    echo ""
+
+    local length_numbers=2
+    local length_lines=92
+    local format_digits=`printf -- "%%%dd" ${length_numbers}`
+    local length_dotted_line=$(( length_lines - 1 - length_numbers - 1 - 1 - 1 - length_numbers - 1 ))
+
+    local top_separator=`printf -- "${C_HR}%.0s" $(seq 1 ${length_lines})`
+    local left_margin=`printf -- ' %.0s' {1..2}`
+    local space_after_title=`printf -- ' %.0s' $(seq 1 ${length_lines})`
+    local specialLine=`printf -- '·%.0s' $(seq 1 ${length_dotted_line})`
+    printf -- "${left_margin}${C_TL}${top_separator}${C_TR}\n"
+    printf -- "${left_margin}${C_VR}${C_BOLD}${sel_title}${C_DEFAULT}${space_after_title:${#sel_title}}${C_VR}\n"
+    printf -- "${left_margin}${C_C1}${top_separator}${C_C2}\n"
     for (( i=1; i<${sel_num_options}+1; i++ )); do
         local thisDir=${sel_options[$i-1]}
-        printf "%s%2d %s %s %2d\n" "${left_margin}" ${i} "${thisDir}" "${specialLine:${#thisDir}}" ${i}
+        printf -- "${left_margin}${C_VR} ${format_digits} %s %s ${format_digits} ${C_VR}\n" ${i} "${thisDir}" "${specialLine:${#thisDir}}" ${i}
     done
+    printf -- "${left_margin}${C_BL}${top_separator}${C_BR}\n"
     echo ""
     echo -n "${left_margin}Select index: "
     read user_selection_inner
@@ -271,7 +312,6 @@ function selection_picker() {
 function read_options_from_file() {
     local this_file=$1
     local -n arr=$2
-    echo "..." ${this_file}
     if [[ -f ${this_file} ]] ; then
         mapfile -t arr < ${this_file}
     fi
