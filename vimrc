@@ -164,6 +164,15 @@ let g:netrw_sort_options = 'i'
 
 let mapleader=','
 
+" maps for deleting or replacing without yanking
+" https://superuser.com/a/321726/154369
+" delete without yanking
+nnoremap <leader>d "_d
+vnoremap <leader>d "_d
+
+" replace currently selected text with default register without yanking it
+vnoremap <leader>p "_dP
+
 set number
 set cursorline
 highlight LineNr ctermfg=white ctermbg=DarkGrey guifg=white guibg=DarkGrey
