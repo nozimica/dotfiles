@@ -275,12 +275,17 @@ function cds() {
 }
 
 function selection_picker() {
-    if [[ $# != 3 ]] ; then
+    if [[ $# -lt 3 ]] || [[ $# -gt 4 ]] ; then
         return
     fi
     local sel_title=" $1"
     local -n sel_options=$2
     local -n user_selection_inner=$3
+    if [[ $# == 4 ]] ; then
+        local -n index_user_selection=$4
+    else
+        local index_user_selection=0
+    fi
     local sel_num_options=${#sel_options[@]}
 
     local length_numbers=2
@@ -300,34 +305,44 @@ function selection_picker() {
     local horiz_separator=`printf -- "${C_HR}%.0s" $(seq 1 ${length_lines})`
     local left_margin=`printf -- ' %.0s' $(seq 1 ${length_left_margin})`
     local space_after_title=`printf -- ' %.0s' $(seq 1 ${length_lines})`
-    local specialLine=`printf -- '·%.0s' $(seq 1 ${length_dotted_line})`
+    local specialLine=" `printf -- '·%.0s' $(seq 1 ${length_dotted_line})`"
     printf -- "${left_margin}${C_TL}${horiz_separator}${C_TR}\n"
     printf -- "${left_margin}${C_VR}${C_BOLD}${sel_title}${C_DEFAULT}${space_after_title:${#sel_title}}${C_VR}\n"
     printf -- "${left_margin}${C_C1}${horiz_separator}${C_C2}\n"
     local j=0
     local actual_indexes=()
+    local actual_elements=()
     for (( i=1; i<${sel_num_options}+1; i++ )); do
         local option_i=${sel_options[$i-1]}
-        if [[ -z ${option_i} ]]; then
+        if [[ -z ${option_i} || ${option_i} == "---" ]]; then
             printf -- "${left_margin}${C_C1}${horiz_separator}${C_C2}\n"
         else
             j=$(( j + 1 ))
             local option_length=${#option_i}
-            if [[ ${option_length} -gt ${length_dotted_line} ]]; then
+
+            if [[ ${option_length} -gt $((${length_dotted_line} + 1)) ]]; then
                 printf -- "${left_margin}${C_VR} ${format_digits} %s ${format_digits_str} ${C_VR}\n" ${j} "${option_i:0:${length_dotted_line}+1}"
                 local remaining_chars=$(( option_length - length_dotted_line + 1 ))
                 printf -- "${left_margin}${C_VR} ${format_digits_str}   %s %s ${format_digits} ${C_VR}\n" "${option_i:${length_dotted_line}+1}" "${specialLine:${remaining_chars}}" ${j}
             else
-                printf -- "${left_margin}${C_VR} ${format_digits} %s %s ${format_digits} ${C_VR}\n" ${j} "${option_i}" "${specialLine:${option_length}}" ${j}
+                printf -- "${left_margin}${C_VR} ${format_digits} %s%s ${format_digits} ${C_VR}\n" ${j} "${option_i}" "${specialLine:${option_length}}" ${j}
             fi
             actual_indexes+=($i)
+            actual_elements+=("${j} ${option_i}")
         fi
     done
     printf -- "${left_margin}${C_BL}${horiz_separator}${C_BR}\n\n"
-    echo -n "${left_margin}Select index: "
-    read user_selection
+
+    read -p "${left_margin}Select index, or '.' for fuzzy finder: " user_selection
+    if [[ ${user_selection} == "." ]] ; then
+        user_selection=$(printf "%s\n" "${actual_elements[@]}" | fzf --delimiter=" " --nth 2.. --no-sort --cycle --height=20 --border=rounded | awk '{print $1}')
+        echo "\n..."
+        echo ${user_selection}
+        echo "\n..."
+    fi
     if [[ ${user_selection} -ge 1 ]] && [[ ${user_selection} -le ${j} ]] ; then
         user_selection=${actual_indexes[${user_selection}-1]}
+        index_user_selection=${user_selection}
         user_selection_inner=${sel_options[${user_selection}-1]}
         return 0
     elif [[ -z ${user_selection} ]]; then
@@ -336,7 +351,7 @@ function selection_picker() {
     fi
     echo "Wrong index."
     user_selection_inner=""
-    return 1
+    return 2
 }
 
 function read_options_from_file() {
