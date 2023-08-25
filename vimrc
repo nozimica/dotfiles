@@ -9,6 +9,8 @@ set expandtab
 
 set background=dark
 
+let mapleader=','
+
 set autoindent
 " set smartindent
 filetype on
@@ -68,7 +70,7 @@ set dictionary-=/usr/share/dict/words dictionary+=/usr/share/dict/words
 "endfunction
 "inoremap <Tab> <C-R>=CleverTab()<CR>
 
-" tip 64
+" tip 64: Set working directory to the current file
 map ,cd :cd %:p:h<CR>
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -162,16 +164,15 @@ let g:netrw_keepdir      = 0
 let g:netrw_liststyle    = 3        " make netrw display a tree view
 let g:netrw_sort_options = 'i'
 
-let mapleader=','
-
 " maps for deleting or replacing without yanking
 " https://superuser.com/a/321726/154369
+" https://superuser.com/a/321605/154369
 " delete without yanking
 nnoremap <leader>d "_d
 vnoremap <leader>d "_d
 
 " replace currently selected text with default register without yanking it
-vnoremap <leader>p "_dP
+xnoremap <leader>p "_dP
 
 set number
 set cursorline
@@ -197,3 +198,8 @@ if &term =~ '256color'
     " work properly when Vim is used inside tmux and GNU screen.
     set t_ut=
 endif
+if has("mouse_sgr")
+    set ttymouse=sgr
+else
+    set ttymouse=xterm2
+end
