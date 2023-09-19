@@ -286,46 +286,48 @@ function selection_picker() {
     else
         local index_user_selection=0
     fi
-    local sel_num_options=${#sel_options[@]}
 
     local length_numbers=2
     local length_left_margin=2
     local length_lines=92
-    local length_total=$(( length_lines + length_left_margin + 2 ))
+    local length_total=$(( length_left_margin + 1 + length_lines + 1 ))
     if [[ ${COLUMNS} -lt ${length_total} ]] ; then
         length_lines=$(( length_lines - length_total + COLUMNS + 1 ))
         length_left_margin=1
-        length_total=$(( length_lines + length_left_margin + 2 ))
     fi
 
-    local format_digits=`printf -- "%%%dd" ${length_numbers}`
-    local format_digits_str=`printf -- ' %.0s' $(seq 1 ${length_numbers})`
-    local length_dotted_line=$(( length_lines - 1 - length_numbers - 1 - 1 - 1 - length_numbers - 1 ))
+    local FMT_digits=`printf -- "%%%dd" ${length_numbers}`
+    local blank_instead_of_digits=`printf -- ' %.0s' $(seq 1 ${length_numbers})`
+    local option_max_length=$(( length_lines - 1 - length_numbers - 2 - length_numbers - 1 ))
 
     local horiz_separator=`printf -- "${C_HR}%.0s" $(seq 1 ${length_lines})`
     local left_margin=`printf -- ' %.0s' $(seq 1 ${length_left_margin})`
     local space_after_title=`printf -- ' %.0s' $(seq 1 ${length_lines})`
-    local specialLine=" `printf -- '·%.0s' $(seq 1 ${length_dotted_line})`"
+    local dotted_line=" `printf -- '·%.0s' $(seq 1 ${option_max_length})`"
     printf -- "${left_margin}${C_TL}${horiz_separator}${C_TR}\n"
     printf -- "${left_margin}${C_VR}${C_BOLD}${sel_title}${C_DEFAULT}${space_after_title:${#sel_title}}${C_VR}\n"
     printf -- "${left_margin}${C_C1}${horiz_separator}${C_C2}\n"
     local j=0
     local actual_indexes=()
     local actual_elements=()
-    for (( i=1; i<${sel_num_options}+1; i++ )); do
+    for (( i=1; i<${#sel_options[@]}+1; i++ )); do
         local option_i=${sel_options[$i-1]}
         if [[ -z ${option_i} || ${option_i} == "---" ]]; then
             printf -- "${left_margin}${C_C1}${horiz_separator}${C_C2}\n"
         else
             j=$(( j + 1 ))
-            local option_length=${#option_i}
-
-            if [[ ${option_length} -gt $((${length_dotted_line} + 1)) ]]; then
-                printf -- "${left_margin}${C_VR} ${format_digits} %s ${format_digits_str} ${C_VR}\n" ${j} "${option_i:0:${length_dotted_line}+1}"
-                local remaining_chars=$(( option_length - length_dotted_line + 1 ))
-                printf -- "${left_margin}${C_VR} ${format_digits_str}   %s %s ${format_digits} ${C_VR}\n" "${option_i:${length_dotted_line}+1}" "${specialLine:${remaining_chars}}" ${j}
+            if [[ ${#option_i} -gt $((${option_max_length} )) ]]; then
+                printf -- "${left_margin}${C_VR} ${FMT_digits} %s ${blank_instead_of_digits} ${C_VR}\n" ${j} "${option_i:0:${option_max_length}}"
+                local opt_idx_bgn=${option_max_length}
+                while [ $(( ${opt_idx_bgn} + ${option_max_length} )) -lt ${#option_i} ]; do
+                    printf -- "${left_margin}${C_VR} ${blank_instead_of_digits} %s ${blank_instead_of_digits} ${C_VR}\n" "${option_i:${opt_idx_bgn}:${option_max_length}}"
+                    opt_idx_bgn=$(( ${opt_idx_bgn} + ${option_max_length} ))
+                done
+                local dotted_length_j=$(( ${option_max_length} - ${#option_i} + ${opt_idx_bgn} ))
+                printf -- "${left_margin}${C_VR} ${blank_instead_of_digits} %s%s ${FMT_digits} ${C_VR}\n" "${option_i:${opt_idx_bgn}}" "${dotted_line:0:${dotted_length_j}}" ${j}
             else
-                printf -- "${left_margin}${C_VR} ${format_digits} %s%s ${format_digits} ${C_VR}\n" ${j} "${option_i}" "${specialLine:${option_length}}" ${j}
+                local dotted_length_j=$(( ${option_max_length} - ${#option_i} ))
+                printf -- "${left_margin}${C_VR} ${FMT_digits} %s%s ${FMT_digits} ${C_VR}\n" ${j} "${option_i}" "${dotted_line:0:${dotted_length_j}}" ${j}
             fi
             actual_indexes+=($i)
             actual_elements+=("${j} ${option_i}")
@@ -336,9 +338,6 @@ function selection_picker() {
     read -p "${left_margin}Select index, or '.' for fuzzy finder: " user_selection
     if [[ ${user_selection} == "." ]] ; then
         user_selection=$(printf "%s\n" "${actual_elements[@]}" | fzf --delimiter=" " --nth 2.. --no-sort --cycle --height=20 --border=rounded | awk '{print $1}')
-        echo "\n..."
-        echo ${user_selection}
-        echo "\n..."
     fi
     if [[ ${user_selection} -ge 1 ]] && [[ ${user_selection} -le ${j} ]] ; then
         user_selection=${actual_indexes[${user_selection}-1]}
