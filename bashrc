@@ -219,6 +219,9 @@ fi
 
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
 
+# Makefile autocomplete
+complete -W "\`if [ -f Makefile ]; then grep -oE '^[a-zA-Z0-9_-]+:([^=]|$)' Makefile | sed 's/[^a-zA-Z0-9_-]*$//'; elif [ -f makefile ]; then grep -oE '^[a-zA-Z0-9_-]+:([^=]|$)' makefile | sed 's/[^a-zA-Z0-9_-]*$//'; fi \`" make
+
 ###########################################################################
 # Miscelanneous
 C_CLEAR="\033c"                       # Clear screen
