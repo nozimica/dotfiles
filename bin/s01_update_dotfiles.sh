@@ -14,6 +14,7 @@ dfiles=(\
     bashrc \
     bash_aliases
     gitconfig \
+    tmux.conf \
 )
 
 # List of commands for each file
@@ -24,7 +25,7 @@ declare -A commfiles=(\
 )
 function gitconfigfunc() {
     read -p 'Ingrese su email para git: ' gitemail
-    git config --global user.email "${gitemail}"
+    git config --file ~/.gitconfig.local user.email "${gitemail}"
 }
 
 install_links () {
@@ -75,6 +76,7 @@ backup_and_link () {
         ln -s $DOTFILES_DIR/$thisFile $localDotFile
     fi
 
+    # execute post command for this file, if any
     if [[ ${commfiles["$thisFile"]} ]]; then
         echo "Executing post command for $localDotFile:"
         echo "    ${commfiles[""$thisFile""]}"
