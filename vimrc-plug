@@ -212,4 +212,7 @@ Plug 'derekwyatt/vim-scala'
 Plug 'lifepillar/vim-solarized8'
 let g:solarized_italics = 0
 
+""" Jinja2
+Plug 'glench/vim-jinja2-syntax'
+
 call plug#end()
