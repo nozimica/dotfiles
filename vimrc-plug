@@ -213,6 +213,12 @@ Plug 'lifepillar/vim-solarized8'
 let g:solarized_italics = 0
 
 """ Jinja2
-Plug 'glench/vim-jinja2-syntax'
+Plug 'glench/vim-jinja2-syntax', { 'for': ['jinja', 'jinja2', 'j2', 'html', 'text', 'txt'] }
+
+" """ Interdental
+" Plug 'airblade/vim-interdental'
+" let g:leadmultispace = '  ⋮ · ⋮ · ⋮ · ⋮ · ⋮ · ⋮ · ⋮ · ⋮'
+" nmap <Leader>ti <Plug>(InterdentalToggle)
+" autocmd FileType ruby,html,py,java,json,yml,yaml call interdental#toggle(1)
 
 call plug#end()
