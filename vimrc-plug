@@ -221,4 +221,7 @@ Plug 'glench/vim-jinja2-syntax', { 'for': ['jinja', 'jinja2', 'j2', 'html', 'tex
 " nmap <Leader>ti <Plug>(InterdentalToggle)
 " autocmd FileType ruby,html,py,java,json,yml,yaml call interdental#toggle(1)
 
+""" Lua
+Plug 'wolfgangmehner/lua-support'
+
 call plug#end()
