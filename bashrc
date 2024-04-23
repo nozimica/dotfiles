@@ -232,6 +232,8 @@ C_DEFAULT="\e[0m"                     # Return to default
 C_FG_BLUE="\e[38;05;25m"              # Blue
 C_FG_WHITE="\e[38;05;255m"            # White
 C_FG_RED="\e[38;05;196m"              # Red
+C_FG_ORANGE="\e[38;05;208m"
+C_FG_GREEN="\e[38;05;34m"
 
 C_FG_YELLOW="\e[38;05;100m"           # Yellow fg
 C_BG_YELLOW="\e[48;05;100;255m"       # Yellow bg, white fg
