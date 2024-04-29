@@ -27,12 +27,49 @@ stty -ixon
 # set vi bindings for command line editing
 set -o vi
 
+# # for tmux
+# force_color_prompt=yes
+
+###########################################################################
+# Miscelanneous
+C_CLEAR="\033c"                       # Clear screen
+C_BOLD="\e[1m"                        # Bold
+C_DEFAULT="\e[0m"                     # Return to default
+
+# Colors
+C_FG_BLUE="\e[38;05;25m"              # Blue
+C_FG_WHITE="\e[38;05;255m"            # White
+C_FG_RED="\e[38;05;196m"              # Red
+C_FG_ORANGE="\e[38;05;208m"
+C_FG_BRIGHT_RED="\e[38;05;009m"
+C_FG_GREEN="\e[38;05;34m"
+
+C_FG_YELLOW="\e[38;05;100m"           # Yellow fg
+C_BG_YELLOW="\e[48;05;100;255m"       # Yellow bg, white fg
+
+# Corners
+C_TL="\x1b(0\x6c\x1b(B"               # Top left corner      (
+C_TR="\x1b(0\x6b\x1b(B"               # Top right corner     )
+C_BL="\x1b(0\x6d\x1b(B"               # Bottom left corner   {
+C_BR="\x1b(0\x6a\x1b(B"               # Bottom right corner  }
+
+# Lines
+C_HR="\x1b(0\x71\x1b(B"               # Horizontal line      -
+C_VR="\x1b(0\x78\x1b(B"               # Vertical line        |
+
+# Connectors
+C_C1="\x1b(0\x74\x1b(B"               # Connector |-         <
+C_C2="\x1b(0\x75\x1b(B"               # Connector -|         >
+C_C3="\x1b(0\x6e\x1b(B"               # Connector +          +
+C_C4="\x1b(0\x77\x1b(B"               # Connector T          T
+C_C5="\x1b(0\x76\x1b(B"               # Connector flipped T  t
+
 # set variable identifying the chroot you work in (used in the prompt below)
 if [ -z "${debian_chroot:-}" ] && [ -r /etc/debian_chroot ]; then
     debian_chroot=$(cat /etc/debian_chroot)
 fi
 
-# set a fancy prompt (non-color, unless we know we "want" color)
+# Customize prompt: set a fancy prompt (non-color, unless we know we "want" color)
 case "$TERM" in
     xterm-color|*-256color) color_prompt=yes;;
 esac
@@ -53,23 +90,42 @@ if [ -n "$force_color_prompt" ]; then
     fi
 fi
 
+# 2. alias for known hosts
+if [[ ${HOSTNAME} == "some known host" ]]; then
+    PSHOSTLOCAL="hostname"
+else
+    PSHOSTLOCAL=${HOSTNAME}
+fi
+
+parse_git_branch() {
+     git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/(\1)/'
+}
+
+# 3. set prompt
+function set_prompt_with_host() {
+    local PSHOSTLOCAL=$1
+    export PS1="[${C_BOLD}\u@${PSHOSTLOCAL}${C_DEFAULT} ${C_FG_GREEN}\w${C_DEFAULT} ${C_FG_BRIGHT_RED}\$(parse_git_branch)${C_DEFAULT}]$ "
+    # export PS1="[\u@${PSHOSTLOCAL} \[\e[32m\]\w \[\e[91m\]\$(parse_git_branch)\[\e[00m\]]$ "
+}
+
 if [ "$color_prompt" = yes ]; then
-    PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
+    set_prompt_with_host ${PSHOSTLOCAL}
+    # PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
     # PS1="[\u@\h \[\e[32m\]\w \[\e[91m\]\$(parse_git_branch)\[\e[00m\]]$ "
 else
     PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w\$ '
 fi
 unset color_prompt force_color_prompt
 
-# If this is an xterm set the title to user@host:dir
-case "$TERM" in
-xterm*|rxvt*)
-    # PS1="\[\e]0;${debian_chroot:+($debian_chroot)}\u@\h: \w\a\]$PS1"
-    PS1='${debian_chroot:+($debian_chroot)}[\u@\h:\w/]\$ '
-    ;;
-*)
-    ;;
-esac
+# # If this is an xterm set the title to user@host:dir
+# case "$TERM" in
+# xterm*|rxvt*)
+#     # PS1="\[\e]0;${debian_chroot:+($debian_chroot)}\u@\h: \w\a\]$PS1"
+#     PS1='${debian_chroot:+($debian_chroot)}[\u@\h:\w/]\$ '
+#     ;;
+# *)
+#     ;;
+# esac
 
 # enable color support of ls and also add handy aliases
 if [ -x /usr/bin/dircolors ]; then
@@ -184,6 +240,14 @@ if [ -d $HOME/opt/nodejs ]; then
     export PATH=$HOME/opt/nodejs/bin:$PATH
 fi
 
+# some terminal customization
+if [[ $DETECTED_OSTYPE == "darwin" ]]; then
+    export LSCOLORS=ExFxBxDxCxegedabagacad
+    export CLICOLOR=1
+elif [[ $DETECTED_OSTYPE == "linux" ]]; then
+    export LS_COLORS=${LS_COLORS}:"*.py=01;33"
+fi
+
 
 # export LC_TIME="es_CL.UTF-8"
 # export LC_PAPER="es_CL.UTF-8"
@@ -221,40 +285,6 @@ fi
 
 # Makefile autocomplete
 complete -W "\`if [ -f Makefile ]; then grep -oE '^[a-zA-Z0-9_-]+:([^=]|$)' Makefile | sed 's/[^a-zA-Z0-9_-]*$//'; elif [ -f makefile ]; then grep -oE '^[a-zA-Z0-9_-]+:([^=]|$)' makefile | sed 's/[^a-zA-Z0-9_-]*$//'; fi \`" make
-
-###########################################################################
-# Miscelanneous
-C_CLEAR="\033c"                       # Clear screen
-C_BOLD="\e[1m"                        # Bold
-C_DEFAULT="\e[0m"                     # Return to default
-
-# Colors
-C_FG_BLUE="\e[38;05;25m"              # Blue
-C_FG_WHITE="\e[38;05;255m"            # White
-C_FG_RED="\e[38;05;196m"              # Red
-C_FG_ORANGE="\e[38;05;208m"
-C_FG_LIGHT_ORANGE="\e[38;05;214m"
-C_FG_GREEN="\e[38;05;34m"
-
-C_FG_YELLOW="\e[38;05;100m"           # Yellow fg
-C_BG_YELLOW="\e[48;05;100;255m"       # Yellow bg, white fg
-
-# Corners
-C_TL="\x1b(0\x6c\x1b(B"               # Top left corner      (
-C_TR="\x1b(0\x6b\x1b(B"               # Top right corner     )
-C_BL="\x1b(0\x6d\x1b(B"               # Bottom left corner   {
-C_BR="\x1b(0\x6a\x1b(B"               # Bottom right corner  }
-
-# Lines
-C_HR="\x1b(0\x71\x1b(B"               # Horizontal line      -
-C_VR="\x1b(0\x78\x1b(B"               # Vertical line        |
-
-# Connectors
-C_C1="\x1b(0\x74\x1b(B"               # Connector |-         <
-C_C2="\x1b(0\x75\x1b(B"               # Connector -|         >
-C_C3="\x1b(0\x6e\x1b(B"               # Connector +          +
-C_C4="\x1b(0\x77\x1b(B"               # Connector T          T
-C_C5="\x1b(0\x76\x1b(B"               # Connector flipped T  t
 
 ###########################################################################
 # directory changer
