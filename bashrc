@@ -104,7 +104,7 @@ parse_git_branch() {
 # 3. set prompt
 function set_prompt_with_host() {
     local PSHOSTLOCAL=$1
-    export PS1="[${C_BOLD}\u@${PSHOSTLOCAL}${C_DEFAULT} ${C_FG_GREEN}\w${C_DEFAULT} ${C_FG_BRIGHT_RED}\$(parse_git_branch)${C_DEFAULT}]$ "
+    export PS1="[\[${C_BOLD}\]\u@${PSHOSTLOCAL}\[${C_DEFAULT}\] \[${C_FG_GREEN}\]\w\[${C_DEFAULT}\] \[${C_FG_BRIGHT_RED}\]\$(parse_git_branch)\[${C_DEFAULT}\]]$ "
     # export PS1="[\u@${PSHOSTLOCAL} \[\e[32m\]\w \[\e[91m\]\$(parse_git_branch)\[\e[00m\]]$ "
 }
 
