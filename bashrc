@@ -24,6 +24,9 @@ shopt -s checkwinsize
 # turn off suspend and resume CTRL-s
 stty -ixon
 
+# set vim as the editor
+export EDITOR=vim
+
 # set vi bindings for command line editing
 set -o vi
 
@@ -48,21 +51,32 @@ C_FG_YELLOW="\e[38;05;100m"           # Yellow fg
 C_BG_YELLOW="\e[48;05;100;255m"       # Yellow bg, white fg
 
 # Corners
-C_TL="\x1b(0\x6c\x1b(B"               # Top left corner      (
-C_TR="\x1b(0\x6b\x1b(B"               # Top right corner     )
-C_BL="\x1b(0\x6d\x1b(B"               # Bottom left corner   {
-C_BR="\x1b(0\x6a\x1b(B"               # Bottom right corner  }
+#C_TL="\x1b(0\x6c\x1b(B"               # Top left corner      (
+C_TL="\U256D"               # Top left corner      (
+#C_TR="\x1b(0\x6b\x1b(B"               # Top right corner     )
+C_TR="\U256E"               # Top right corner     )
+#C_BL="\x1b(0\x6d\x1b(B"               # Bottom left corner   {
+C_BL="\U2570"               # Bottom left corner   {
+#C_BR="\x1b(0\x6a\x1b(B"               # Bottom right corner  }
+C_BR="\U256F"               # Bottom right corner  }
 
 # Lines
-C_HR="\x1b(0\x71\x1b(B"               # Horizontal line      -
-C_VR="\x1b(0\x78\x1b(B"               # Vertical line        |
+#C_HR="\x1b(0\x71\x1b(B"               # Horizontal line      -
+C_HR="\U2500"               # Horizontal line      -
+#C_VR="\x1b(0\x78\x1b(B"               # Vertical line        |
+C_VR="\U2502"               # Vertical line        |
 
 # Connectors
-C_C1="\x1b(0\x74\x1b(B"               # Connector |-         <
-C_C2="\x1b(0\x75\x1b(B"               # Connector -|         >
-C_C3="\x1b(0\x6e\x1b(B"               # Connector +          +
-C_C4="\x1b(0\x77\x1b(B"               # Connector T          T
-C_C5="\x1b(0\x76\x1b(B"               # Connector flipped T  t
+#C_C1="\x1b(0\x74\x1b(B"               # Connector |-         <
+C_C1="\U251C"               # Connector |-         <
+#C_C2="\x1b(0\x75\x1b(B"               # Connector -|         >
+C_C2="\U2524"               # Connector -|         >
+#C_C3="\x1b(0\x6e\x1b(B"               # Connector +          +
+C_C3="\U253C"               # Connector +          +
+#C_C4="\x1b(0\x77\x1b(B"               # Connector T          T
+C_C4="\U252C"               # Connector T          T
+#C_C5="\x1b(0\x76\x1b(B"               # Connector flipped T  t
+C_C5="\U2534"               # Connector flipped T  t
 
 # set variable identifying the chroot you work in (used in the prompt below)
 if [ -z "${debian_chroot:-}" ] && [ -r /etc/debian_chroot ]; then
@@ -181,16 +195,16 @@ fi
 # Anaconda paths
 function loadAnaconda {
     if [ -d $HOME/opt/anaconda3/bin ]; then
-        export PYTHONNOUSERSITE=True
         initializeAnaconda $HOME/opt/anaconda3
+    elif [ -d $HOME/work/opt/miniconda3/bin ]; then
+        # initializeAnaconda $HOME/work/opt/miniconda3
+        export PATH=$HOME/work/opt/miniconda3/bin:$PATH
+        source $HOME/work/opt/miniconda3/bin/activate
     elif [ -d $HOME/opt/anaconda2/bin ]; then
-        export PYTHONNOUSERSITE=True
         initializeAnaconda $HOME/opt/anaconda2
     elif [ -d $HOME/opt/miniconda3/bin ]; then
-        export PYTHONNOUSERSITE=True
         initializeAnaconda $HOME/opt/miniconda3
     elif [ -d $HOME/opt/miniconda2/bin ]; then
-        export PYTHONNOUSERSITE=True
         initializeAnaconda $HOME/opt/miniconda2
     elif [ -d $HOME/.local/bin ]; then
         export PATH=$HOME/.local/bin:$PATH
@@ -198,6 +212,7 @@ function loadAnaconda {
 }
 
 function initializeAnaconda {
+    export PYTHONNOUSERSITE=True
     # >>> conda initialize >>>
     # $1 is the path to conda directory
     #
