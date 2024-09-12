@@ -304,7 +304,7 @@ complete -W "\`if [ -f Makefile ]; then grep -oE '^[a-zA-Z0-9_-]+:([^=]|$)' Make
 ###########################################################################
 # directory changer
 #
-function cds() {
+function cds {
     local source_file="${HOME}/.bash_workingdirs"
     if [[ -f ${source_file} ]] ; then
         local user_selection
@@ -314,7 +314,7 @@ function cds() {
         if [[ $# == 1 ]] ; then
             user_selection=$1
         else
-            selection_picker "Working directories:" dirsArr user_selection
+            selection_picker "Working directories" dirsArr user_selection
         fi
 
         if [[ -n ${user_selection} ]]; then
@@ -325,11 +325,41 @@ function cds() {
     fi
 }
 
-function selection_picker() {
+# Offers a simple command picker, customized for common git commands
+GIT_COMMANDS=(
+    "git pull && git push"
+    ""
+    "git add -u && git commit"
+    "git add -u && git commit --amend"
+    "git show --pretty=%gd --stat"
+    ""
+    "git rebase -i mainline"
+)
+
+function G {
+    command_picker "GIT commands" "Running" GIT_COMMANDS $@
+}
+
+function command_picker {
+    local user_selection
+    if [[ $# == 4 ]] ; then
+        user_selection=$4
+    else
+        selection_picker "${1}" "${3}" user_selection
+    fi
+    if [[ -n ${user_selection} ]]; then
+        echo "    ${2}:"
+        echo "    '${user_selection}'"
+        history -s "${user_selection}"
+        eval "${user_selection}"
+    fi
+}
+
+function selection_picker {
     if [[ $# -lt 3 ]] || [[ $# -gt 4 ]] ; then
         return
     fi
-    local sel_title=" $1"
+    local sel_title=" ${1}:"
     local -n sel_options=$2
     local -n user_selection_inner=$3
     if [[ $# == 4 ]] ; then
@@ -347,7 +377,7 @@ function selection_picker() {
         length_left_margin=1
     fi
 
-    local FMT_digits=`printf -- "%%%dd" ${length_numbers}`
+    local FMT_digits=`printf -- "${C_FG_GREEN}%%%dd${C_DEFAULT}" ${length_numbers}`
     local blank_instead_of_digits=`printf -- ' %.0s' $(seq 1 ${length_numbers})`
     local option_max_length=$(( length_lines - 1 - length_numbers - 2 - length_numbers - 1 ))
 
