@@ -328,6 +328,7 @@ function cds {
 # Offers a simple command picker, customized for common git commands
 GIT_COMMANDS=(
     "git pull && git push"
+    "git pull origin mainline:mainline"
     ""
     "git add -u && git commit"
     "git add -u && git commit --amend"
