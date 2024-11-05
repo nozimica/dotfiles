@@ -332,9 +332,15 @@ GIT_COMMANDS=(
     ""
     "git add -u && git commit"
     "git add -u && git commit --amend"
+    ""
     "git show --pretty=%gd --stat"
+    "git diff --check"
     ""
     "git rebase -i mainline"
+    ""
+    "git reset --soft HEAD~1"
+    ""
+    "git {}"
 )
 
 function G {
