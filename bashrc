@@ -349,8 +349,13 @@ function command_picker {
         selection_picker "${1}" "${3}" user_selection
     fi
     if [[ -n ${user_selection} ]]; then
-        echo "  ${2}: '${user_selection}'"
-        echo ""
+        if [ -z "${user_selection##* \{\}}" ]; then
+            read -e -p"${2}: " -i"${user_selection% \{\}} " user_selection
+            echo ${user_selection}
+        else
+            echo "  ${2}: '${user_selection}'"
+            echo ""
+        fi
         history -s "${user_selection}"
         eval "${user_selection}"
     fi
