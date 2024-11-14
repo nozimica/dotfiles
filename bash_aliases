@@ -49,6 +49,8 @@ alias gcal='gcal -s 1'
 
 alias listFailedPasswords="sudo zgrep -h 'Failed password' /var/log/auth.* | grep sshd | awk '{print $1,$2}' | sort -k 1,1M -k 2n | uniq -c"
 
+alias GG='git dog -11'
+
 ## For Terminator
 setWindowTitle() {
     echo -ne "\033]0; ${1} \007"
