@@ -334,6 +334,7 @@ GIT_COMMANDS=(
     "git diff --check"
     ""
     "git rebase -i mainline"
+    "git rebase --onto \$(parse_git_branch) rde~1 rde"
     ""
     "git reset --soft HEAD~1"
     ""
