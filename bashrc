@@ -112,20 +112,17 @@ else
 fi
 
 parse_git_branch() {
-     git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/(\1)/'
+     git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/\1/'
 }
 
 # 3. set prompt
 function set_prompt_with_host() {
     local PSHOSTLOCAL=$1
-    export PS1="[\[${C_BOLD}\]\u@${PSHOSTLOCAL}\[${C_DEFAULT}\] \[${C_FG_GREEN}\]\w\[${C_DEFAULT}\] \[${C_FG_BRIGHT_RED}\]\$(parse_git_branch)\[${C_DEFAULT}\]]$ "
-    # export PS1="[\u@${PSHOSTLOCAL} \[\e[32m\]\w \[\e[91m\]\$(parse_git_branch)\[\e[00m\]]$ "
+    export PS1="[\[${C_BOLD}\]\u@${PSHOSTLOCAL}\[${C_DEFAULT}\] \[${C_FG_GREEN}\]\w\[${C_DEFAULT}\] \[${C_FG_BRIGHT_RED}\](\$(parse_git_branch))\[${C_DEFAULT}\]]$ "
 }
 
 if [ "$color_prompt" = yes ]; then
     set_prompt_with_host ${PSHOSTLOCAL}
-    # PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
-    # PS1="[\u@\h \[\e[32m\]\w \[\e[91m\]\$(parse_git_branch)\[\e[00m\]]$ "
 else
     PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w\$ '
 fi
