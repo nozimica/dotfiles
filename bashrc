@@ -111,14 +111,19 @@ else
     PSHOSTLOCAL=${HOSTNAME}
 fi
 
-parse_git_branch() {
-     git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/\1/'
+get_current_git_branch() {
+     git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/\* \(.*\)/\1/'
+}
+enclose_current_git_branch() {
+    local CURRENT_BRANCH=$(get_current_git_branch)
+    local ENCLOSED_CURRENT_BRANCH="(${CURRENT_BRANCH})"
+    echo ${CURRENT_BRANCH:+$ENCLOSED_CURRENT_BRANCH}
 }
 
 # 3. set prompt
 function set_prompt_with_host() {
     local PSHOSTLOCAL=$1
-    export PS1="[\[${C_BOLD}\]\u@${PSHOSTLOCAL}\[${C_DEFAULT}\] \[${C_FG_GREEN}\]\w\[${C_DEFAULT}\] \[${C_FG_BRIGHT_RED}\](\$(parse_git_branch))\[${C_DEFAULT}\]]$ "
+    export PS1="[\[${C_BOLD}\]\u@${PSHOSTLOCAL}\[${C_DEFAULT}\] \[${C_FG_GREEN}\]\w\[${C_DEFAULT}\] \[${C_FG_BRIGHT_RED}\]\$(enclose_current_git_branch)\[${C_DEFAULT}\]]$ "
 }
 
 if [ "$color_prompt" = yes ]; then
@@ -334,7 +339,7 @@ GIT_COMMANDS=(
     "git diff --check"
     ""
     "git rebase -i mainline"
-    "git rebase --onto \$(parse_git_branch) rde~1 rde"
+    "git rebase --onto \$(get_current_git_branch) rde~1 rde"
     ""
     "git reset --soft HEAD~1"
     ""
