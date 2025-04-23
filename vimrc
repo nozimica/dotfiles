@@ -171,8 +171,16 @@ let g:netrw_sort_options = 'i'
 nnoremap <leader>d "_d
 vnoremap <leader>d "_d
 
+" yank to a fixed register
+nnoremap <leader>y "0y
+vnoremap <leader>y "0y
+
 " replace currently selected text with default register without yanking it
 xnoremap <leader>p "_dP
+
+" copy to system clipboard
+nnoremap <leader>c "*y
+vnoremap <leader>c "*y
 
 set number
 set cursorline
