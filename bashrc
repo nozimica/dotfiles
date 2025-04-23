@@ -158,6 +158,13 @@ fi
 # colored GCC warnings and errors
 export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
 
+# our default ostype
+DETECTED_OSTYPE="linux"
+
+if [[ $OSTYPE == 'darwin'* ]]; then
+    DETECTED_OSTYPE="darwin"
+fi
+
 ###########################################################################
 # export custom env vars
 
@@ -176,7 +183,11 @@ fi
 # TexLive
 if [ -d $HOME/opt/TexLive ]; then
     export TEXLIVE_HOME=$HOME/opt/TexLive
-    export PATH=$TEXLIVE_HOME/bin/x86_64-linux:$PATH
+    if [[ $DETECTED_OSTYPE == "linux" ]]; then
+        export PATH=$TEXLIVE_HOME/bin/x86_64-linux:$PATH
+    else
+        export PATH=$TEXLIVE_HOME/bin/universal-darwin:$PATH
+    fi
     export MANPATH=$TEXLIVE_HOME/texmf-dist/doc/man:/usr/share/man:/usr/local/man:/usr/local/share/man:$MANPATH
     export INFOPATH=$TEXLIVE_HOME/texmf-dist/doc/info:$INFOPATH
     export PDFVIEWER_texdoc=evince
@@ -255,6 +266,26 @@ fi
 # Nodejs
 if [ -d $HOME/opt/nodejs ]; then
     export PATH=$HOME/opt/nodejs/bin:$PATH
+fi
+
+# Ruby
+if [[ -d $HOME/.rbenv/bin ]]; then
+    export PATH=$HOME/.rbenv/bin:$PATH
+    eval "$(rbenv init -)"
+fi
+
+# Homebrew
+if [[ $DETECTED_OSTYPE == "darwin" ]]; then
+    if [[ -d /opt/homebrew/bin ]]; then
+        export PATH=/opt/homebrew/bin:$PATH
+    fi
+    # Homebrew util-linux
+    if [[ -d /opt/homebrew/opt/util-linux/bin ]]; then
+        export PATH="/opt/homebrew/opt/util-linux/bin:$PATH"
+    fi
+    if [[ -d /opt/homebrew/opt/util-linux/sbin ]]; then
+        export PATH="/opt/homebrew/opt/util-linux/sbin:$PATH"
+    fi
 fi
 
 # some terminal customization
@@ -456,3 +487,7 @@ function read_options_from_file() {
         mapfile -t arr < ${this_file}
     fi
 }
+
+# export NVM_DIR="$HOME/.nvm"
+# [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+# [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
