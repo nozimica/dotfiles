@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 ## Inspired from (among others):
-# https://github.com/zhimsel/dotfiles/blob/master/install.sh
+# https://github.com/zhimsel/dotfiles/blob/main/install.sh
 
 
 # List of dotfiles
@@ -171,7 +171,7 @@ main () {
     echo ""
     print_msg "Update dotfiles itself first."
 
-    [ -d "$DOTFILES_DIR/.git" ] && git --work-tree="$DOTFILES_DIR" --git-dir="$DOTFILES_DIR/.git" pull origin master
+    [ -d "$DOTFILES_DIR/.git" ] && git --work-tree="$DOTFILES_DIR" --git-dir="$DOTFILES_DIR/.git" pull origin main
 
     check_scenario
     install_links
