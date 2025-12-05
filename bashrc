@@ -6,6 +6,15 @@ if [ -f /etc/bashrc ]; then
 	. /etc/bashrc
 fi
 
+# our default ostype
+DETECTED_OSTYPE="linux"
+
+if [[ $OSTYPE == 'darwin'* ]]; then
+    DETECTED_OSTYPE="darwin"
+fi
+
+[[ -f ~/.bash_pre_setup.local ]] && . ~/.bash_pre_setup.local
+
 # ignore both duplicate lines or lines starting with space in the history,
 # See bash(1) for more options
 HISTCONTROL=ignoreboth
@@ -157,13 +166,6 @@ fi
 
 # colored GCC warnings and errors
 export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
-
-# our default ostype
-DETECTED_OSTYPE="linux"
-
-if [[ $OSTYPE == 'darwin'* ]]; then
-    DETECTED_OSTYPE="darwin"
-fi
 
 ###########################################################################
 # export custom env vars
@@ -504,3 +506,4 @@ if [ -f "${HOME}/.local/bin/mise" ]; then
     export PATH=${HOME}/.local/share/mise/installs/node/18/bin:${PATH}
 fi
 
+[[ -f ~/.bash_post_setup.local ]] && . ~/.bash_post_setup.local
