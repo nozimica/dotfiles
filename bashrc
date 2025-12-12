@@ -428,6 +428,7 @@ function selection_picker {
     fi
 
     local FMT_digits=`printf -- "${C_FG_GREEN}%%%dd${C_DEFAULT}" ${length_numbers}`
+    local FMT_chars=`printf -- "${C_FG_GREEN}%%%ss${C_DEFAULT}" ${length_numbers}`
     local blank_instead_of_digits=`printf -- ' %.0s' $(seq 1 ${length_numbers})`
     local option_max_length=$(( length_lines - 1 - length_numbers - 2 - length_numbers - 1 ))
 
@@ -440,15 +441,22 @@ function selection_picker {
     printf -- "${left_margin}${C_C1}${horiz_separator}${C_C2}\n"
     local j=0
     local actual_indexes=()
+    declare -A actual_indexes_chars
     local actual_elements=()
+    # Chars starting with 96+1 is a, and 64+1 is A. We need to show lowercase first, and then uppercase, hence the trick below
+    local STARTING_CHAR_IDX=96
     for (( i=1; i<${#sel_options[@]}+1; i++ )); do
         local option_i=${sel_options[$i-1]}
         if [[ -z ${option_i} || ${option_i} == "---" ]]; then
             printf -- "${left_margin}${C_C1}${horiz_separator}${C_C2}\n"
         else
             j=$(( j + 1 ))
+            if [[ ${j} -eq 27 ]]; then
+                STARTING_CHAR_IDX=$(( 64 - j + 1))
+            fi
+            j_char=$(printf "\\$(printf '%03o' $((STARTING_CHAR_IDX + j)))")
             if [[ ${#option_i} -gt $((${option_max_length} )) ]]; then
-                printf -- "${left_margin}${C_VR} ${FMT_digits} %s ${blank_instead_of_digits} ${C_VR}\n" ${j} "${option_i:0:${option_max_length}}"
+                printf -- "${left_margin}${C_VR} ${FMT_chars} %s ${blank_instead_of_digits} ${C_VR}\n" ${j_char} "${option_i:0:${option_max_length}}"
                 local opt_idx_bgn=${option_max_length}
                 while [ $(( ${opt_idx_bgn} + ${option_max_length} )) -lt ${#option_i} ]; do
                     printf -- "${left_margin}${C_VR} ${blank_instead_of_digits} %s ${blank_instead_of_digits} ${C_VR}\n" "${option_i:${opt_idx_bgn}:${option_max_length}}"
@@ -458,9 +466,10 @@ function selection_picker {
                 printf -- "${left_margin}${C_VR} ${blank_instead_of_digits} %s%s ${FMT_digits} ${C_VR}\n" "${option_i:${opt_idx_bgn}}" "${dotted_line:0:${dotted_length_j}}" ${j}
             else
                 local dotted_length_j=$(( ${option_max_length} - ${#option_i} ))
-                printf -- "${left_margin}${C_VR} ${FMT_digits} %s%s ${FMT_digits} ${C_VR}\n" ${j} "${option_i}" "${dotted_line:0:${dotted_length_j}}" ${j}
+                printf -- "${left_margin}${C_VR} ${FMT_chars} %s%s ${FMT_digits} ${C_VR}\n" ${j_char} "${option_i}" "${dotted_line:0:${dotted_length_j}}" ${j}
             fi
             actual_indexes+=($i)
+            actual_indexes_chars["${j_char}"]=${i}
             actual_elements+=("${j} ${option_i}")
         fi
     done
@@ -472,6 +481,11 @@ function selection_picker {
     fi
     if [[ ${user_selection} -ge 1 ]] && [[ ${user_selection} -le ${j} ]] ; then
         user_selection=${actual_indexes[${user_selection}-1]}
+        index_user_selection=${user_selection}
+        user_selection_inner=${sel_options[${user_selection}-1]}
+        return 0
+    elif [[ ${user_selection} -ge "a" ]] && [[ ${user_selection} -le "${j_char}" ]] ; then
+        user_selection=${actual_indexes_chars[${user_selection}]}
         index_user_selection=${user_selection}
         user_selection_inner=${sel_options[${user_selection}-1]}
         return 0
