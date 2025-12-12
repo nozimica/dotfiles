@@ -104,12 +104,12 @@ esac
 
 if [ -n "$force_color_prompt" ]; then
     if [ -x /usr/bin/tput ] && tput setaf 1 >&/dev/null; then
-	# We have color support; assume it's compliant with Ecma-48
-	# (ISO/IEC-6429). (Lack of such support is extremely rare, and such
-	# a case would tend to support setf rather than setaf.)
-	color_prompt=yes
+        # We have color support; assume it's compliant with Ecma-48
+        # (ISO/IEC-6429). (Lack of such support is extremely rare, and such
+        # a case would tend to support setf rather than setaf.)
+        color_prompt=yes
     else
-	color_prompt=
+        color_prompt=
     fi
 fi
 
@@ -365,8 +365,10 @@ GIT_COMMANDS=(
     "git pull && git push"
     "git pull origin mainline:mainline"
     ""
-    "git add -u && git commit"
-    "git add -u && git commit --amend"
+    "git branch --set-upstream-to=origin/mainline"
+    ""
+    "git add -u ':!package-lock.json' && git commit"
+    "git add -u ':!package-lock.json' && git commit --amend"
     ""
     "git show --pretty=%gd --stat"
     "git diff --check"
