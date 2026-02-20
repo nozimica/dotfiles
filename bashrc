@@ -518,8 +518,5 @@ if [ -d $HOME/.nvm ]; then
     #     nvm use 18 --silent
     fi
 fi
-if [ -f "${HOME}/.local/bin/mise" ]; then
-    export PATH=${HOME}/.local/share/mise/installs/node/18/bin:${PATH}
-fi
 
 [[ -f ~/.bash_post_setup.local ]] && . ~/.bash_post_setup.local
