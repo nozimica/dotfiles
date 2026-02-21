@@ -26,6 +26,7 @@
 	dag10 = log --graph --format='format:%C(yellow)%h%C(reset) %C(blue)\"%an\" <%ae>%C(reset) %C(magenta)%cr%C(reset)%C(auto)%d%C(reset)%n%s' --date-order -10
 	dog = log --all --decorate --oneline --graph
 	dogd = log --graph --oneline --all --format='format:%C(yellow)%h%C(reset) %C(magenta)%ci%C(reset)%C(auto)%d%C(reset) %s'
+    rebaseto = "!f() { git checkout \"$1\" && git rebase --update-refs \"@{-1}\"; }; f"
 	br = branch
 	ci = commit
 	st = status
