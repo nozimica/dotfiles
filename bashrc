@@ -479,7 +479,10 @@ function selection_picker {
     if [[ ${user_selection} == "." ]] ; then
         user_selection=$(printf "%s\n" "${actual_elements[@]}" | fzf --delimiter=" " --nth 2.. --no-sort --cycle --height=20 --border=rounded | awk '{print $1}')
     fi
-    if [[ ${user_selection} -ge 1 ]] && [[ ${user_selection} -le ${j} ]] ; then
+    if [[ -z ${user_selection} ]]; then
+        echo "Operation aborted."
+        return 1
+    elif [[ ${user_selection} -ge 1 ]] && [[ ${user_selection} -le ${j} ]] ; then
         user_selection=${actual_indexes[${user_selection}-1]}
         index_user_selection=${user_selection}
         user_selection_inner=${sel_options[${user_selection}-1]}
@@ -489,9 +492,6 @@ function selection_picker {
         index_user_selection=${user_selection}
         user_selection_inner=${sel_options[${user_selection}-1]}
         return 0
-    elif [[ -z ${user_selection} ]]; then
-        echo "Operation aborted."
-        return 1
     fi
     echo "Wrong index."
     user_selection_inner=""
