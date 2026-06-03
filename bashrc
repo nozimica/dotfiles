@@ -375,6 +375,7 @@ GIT_COMMANDS=(
     ""
     "git rebase -i mainline"
     "git rebase --onto \$(get_current_git_branch) rde~1 rde"
+    "git rebase --update-refs {}"
     ""
     "git reset --soft HEAD~1"
     ""
