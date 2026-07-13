@@ -330,6 +330,10 @@ if ! shopt -oq posix; then
     . /etc/bash_completion
   fi
 fi
+if [[ $OSTYPE == 'darwin'* ]]; then
+  [[ -r "/opt/homebrew/etc/profile.d/bash_completion.sh" ]] && . "/opt/homebrew/etc/profile.d/bash_completion.sh"
+fi
+
 
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
 
