@@ -3,18 +3,18 @@
 ## Inspired from (among others):
 # https://github.com/zhimsel/dotfiles/blob/main/install.sh
 
-
 # List of dotfiles
-dfiles=(\
-    vimrc \
-    vimrc-plug \
-    tcshrc \
-    complete.tcsh \
-    Xresources \
-    bashrc \
-    bash_aliases
-    gitconfig \
-    tmux.conf \
+DOTFILES=(
+# dfiles=(\
+    vimrc            .vimrc
+    vimrc-plug       .vimrc-plug
+    tcshrc           .tcshrc
+    complete.tcsh    .complete.tcsh
+    Xresources       .Xresources
+    bashrc           .bashrc
+    bash_aliases     .bash_aliases
+    gitconfig        .gitconfig
+    tmux.conf        .tmux.conf
 )
 
 # List of commands for each file
@@ -29,58 +29,61 @@ function gitconfigfunc() {
 }
 
 install_links () {
-    for file in "${dfiles[@]}"
-    do
-        print_title "$file"
-        backup_and_link "$file"
+    for (( i=0; i<$(( ${#DOTFILES[@]} / 2 )); i++ )); do
+        local source_dotfile=${DOTFILES[$(( ${i} * 2 ))]}
+        local target_dotfile=${DOTFILES[$(( ${i} * 2 + 1 ))]}
+        print_title "${source_dotfile}"
+        backup_and_link "${source_dotfile}" "${target_dotfile}"
     done
+
     pack_backup_folder
     echo ""
 }
 
 backup_and_link () {
-    local thisFile=$1
-    local localDotFile
-    localDotFile="$HOME/.$1"
+    local source_dotfile=$1
+    local target_dotfile="$HOME/$2"
+
+    print_msg "Trying to copy source: '${source_dotfile}' into '${target_dotfile}'"
 
     cd $DOTFILES_DIR
 
     # Check if source dotfile exists
-    if [[ ! -e "$DOTFILES_DIR/$thisFile" ]]; then
-        print_error_msg "$DOTFILES_DIR/$thisFile doesn't exist."
+    if [[ ! -e "$DOTFILES_DIR/$source_dotfile" ]]; then
+        print_error_msg "$DOTFILES_DIR/$source_dotfile doesn't exist."
         exit 2
     fi
 
     # test if target file exists and is a directory (link or not)
-    if [[ -d "$localDotFile" ]]; then
-        print_error_msg "$localDotFile is a directory."
+    if [[ -d "$target_dotfile" ]]; then
+        print_error_msg "$target_dotfile is a directory."
         exit 2
     fi
 
     # test if target file exists
-    if [[ -e "$localDotFile" ]]; then
-        if [[ -L "$localDotFile" ]]; then
-            echo "Link for $localDotFile already exists."
+    if [[ -e "$target_dotfile" ]]; then
+        if [[ -L "$target_dotfile" ]]; then
+            echo "Link for $target_dotfile already exists."
         else
-            echo "A regular file called $localDotFile already exists."
+            echo "A regular file called $target_dotfile already exists."
         fi
-        echo "Backing up $localDotFile."
-        cp $localDotFile $localDotFile.origBeforeUpdateDotFiles
-        cp $localDotFile $BACKUP_FOLDER
-        rm -f $localDotFile
+        echo "Backing up $target_dotfile."
+        cp -rp $target_dotfile ${target_dotfile}.origBeforeUpdateDotFiles
+        cp -rp $target_dotfile $BACKUP_FOLDER
+        rm -rf $target_dotfile
     fi
 
     # test if target file does not exist yet
-    if [[ ! -e "$localDotFile" ]]; then
-        echo "Creating new $localDotFile as a link."
-        ln -s $DOTFILES_DIR/$thisFile $localDotFile
+    if [[ ! -e "$target_dotfile" ]]; then
+        echo "Creating new $target_dotfile as a link."
+        ln -s $DOTFILES_DIR/$source_dotfile $target_dotfile
     fi
 
     # execute post command for this file, if any
-    if [[ ${commfiles["$thisFile"]} ]]; then
-        echo "Executing post command for $localDotFile:"
-        echo "    ${commfiles[""$thisFile""]}"
-        eval ${commfiles["$thisFile"]}
+    if [[ ${commfiles["$source_dotfile"]} ]]; then
+        echo "Executing post command for $target_dotfile:"
+        echo "    ${commfiles[""$source_dotfile""]}"
+        eval ${commfiles["$source_dotfile"]}
     fi
 
     echo ""
