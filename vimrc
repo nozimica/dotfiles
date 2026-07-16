@@ -83,7 +83,7 @@ while c <= 'z'
   let c = nr2char(1+char2nr(c))
 endw
 
-set ttimeout ttimeoutlen=50
+" set ttimeout ttimeoutlen=10
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "" http://www.reddit.com/r/vim/comments/kz84u/what_are_some_simple_yet_mindblowing_tweaks_to/
@@ -193,9 +193,13 @@ highlight GitGutterChangeDelete ctermbg=DarkGrey ctermfg=yellow guifg=yellow cte
 highlight clear CursorLine
 highlight CursorLineNR cterm=bold ctermbg=yellow ctermfg=DarkGrey
 
-source ~/.vimrc-plug
-
-colorscheme solarized8
+" Check if running inside Neovim AND if LunarVim's global object exists
+if has('nvim') && luaeval('type(lvim) == "table"')
+    " Do NOTHING here (this skips the plugins when LunarVim runs)
+else
+    source ~/.vimrc-plug
+    colorscheme solarized8
+endif
 
 au BufNewFile,BufRead *.hql set filetype=hive expandtab
 au BufNewFile,BufRead *.q set filetype=hive expandtab
@@ -206,8 +210,10 @@ if &term =~ '256color'
     " work properly when Vim is used inside tmux and GNU screen.
     set t_ut=
 endif
-if has("mouse_sgr")
-    set ttymouse=sgr
-else
-    set ttymouse=xterm2
+if !has('nvim')
+    if has("mouse_sgr")
+        set ttymouse=sgr
+    else
+        set ttymouse=xterm2
+    end
 end

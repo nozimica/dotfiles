@@ -34,17 +34,6 @@ set tabline=%!tabber#TabLine()
 " asynchronous build and test dispatcher
 Plug 'tpope/vim-dispatch'
 
-""" SnipMate
-" Plug 'tomtom/tlib_vim'
-" Plug 'MarcWeber/vim-addon-mw-utils'
-" Plug 'garbas/vim-snipmate'
-" " Optional:
-" Plug 'honza/vim-snippets'
-
-" """ flake8
-" easy_install --user flake8
-" Plug 'nvie/vim-flake8
-
 """ vim-json
 Plug 'elzr/vim-json'
 
@@ -118,14 +107,14 @@ Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 " let g:autotagTagsFile="~/.vim/.tags"
 " let g:autotagDisabled=0
 
-if executable('ctags')
-    Plug 'xolox/vim-easytags'
-    Plug 'xolox/vim-misc'
-    let g:easytags_file = "~/.vim/.tags"
-    let g:easytags_async = 1
-    " let g:easytags_syntax_keyword = 'always'     " comment if has bad performance
-    " let g:easytags_by_filetype = "~/.vim"
-endif
+" if executable('ctags')
+"     Plug 'xolox/vim-misc'
+"     Plug 'xolox/vim-easytags'
+"     let g:easytags_file = "~/.vim/.tags"
+"     let g:easytags_async = 1
+"     " let g:easytags_syntax_keyword = 'always'     " comment if has bad performance
+"     " let g:easytags_by_filetype = "~/.vim"
+" endif
 
 """ Vim-airline
 Plug 'vim-airline/vim-airline'
@@ -214,12 +203,6 @@ let g:solarized_italics = 0
 
 """ Jinja2
 Plug 'glench/vim-jinja2-syntax', { 'for': ['jinja', 'jinja2', 'j2', 'html', 'text', 'txt'] }
-
-" """ Interdental
-" Plug 'airblade/vim-interdental'
-" let g:leadmultispace = '  ⋮ · ⋮ · ⋮ · ⋮ · ⋮ · ⋮ · ⋮ · ⋮'
-" nmap <Leader>ti <Plug>(InterdentalToggle)
-" autocmd FileType ruby,html,py,java,json,yml,yaml call interdental#toggle(1)
 
 """ Lua
 Plug 'wolfgangmehner/lua-support'
