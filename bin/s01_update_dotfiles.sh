@@ -15,6 +15,7 @@ DOTFILES=(
     bash_aliases     .bash_aliases
     gitconfig        .gitconfig
     tmux.conf        .tmux.conf
+    ghostty.conf     .config/ghostty/config
 )
 
 # List of commands for each file
