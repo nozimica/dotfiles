@@ -83,7 +83,7 @@ while c <= 'z'
   let c = nr2char(1+char2nr(c))
 endw
 
-" set ttimeout ttimeoutlen=10
+set ttimeout ttimeoutlen=0
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "" http://www.reddit.com/r/vim/comments/kz84u/what_are_some_simple_yet_mindblowing_tweaks_to/
