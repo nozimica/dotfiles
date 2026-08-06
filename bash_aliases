@@ -1,5 +1,5 @@
-###########################################################################
 # aliases
+###########################################################################
 
 alias ?='history'
 alias ls='ls -lF'
@@ -11,6 +11,7 @@ alias w='w | more'
 function _newcd() { builtin cd "$@" ; echo $PWD ;}
 alias cd=_newcd;
 alias ..='cd ..'
+alias ...='cd ../..'
 alias motd='cat /etc/motd'
 alias who='who | sort | more'
 alias wget2='wget -r -nH --cut-dirs=1 -b -t 0 -c -i'
