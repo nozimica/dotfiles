@@ -250,11 +250,6 @@ function initializeAnaconda {
     # <<< conda initialize <<<
 }
 
-# GEMS
-if [ -d $HOME/.gem/ruby/2.3.0 ]; then
-    export PATH=$HOME/.gem/ruby/2.3.0/bin:$PATH
-fi
-
 # Cabal
 if [ -d $HOME/.cabal ]; then
     export PATH=$HOME/.cabal/bin:$PATH
@@ -270,11 +265,16 @@ if [ -d $HOME/opt/nodejs ]; then
     export PATH=$HOME/opt/nodejs/bin:$PATH
 fi
 
-# Ruby
-if [[ -d $HOME/.rbenv/bin ]]; then
-    export PATH=$HOME/.rbenv/bin:$PATH
-    eval "$(rbenv init -)"
-fi
+# # GEMS
+# if [ -d $HOME/.gem/ruby/2.3.0 ]; then
+#     export PATH=$HOME/.gem/ruby/2.3.0/bin:$PATH
+# fi
+
+# # Ruby
+# if [[ -d $HOME/.rbenv/bin ]]; then
+#     export PATH=$HOME/.rbenv/bin:$PATH
+#     eval "$(rbenv init -)"
+# fi
 
 # Homebrew
 if [[ $DETECTED_OSTYPE == "darwin" ]]; then
@@ -526,6 +526,17 @@ fi
 
 if [ -d $HOME/.cargo/bin ]; then
     export PATH="$HOME/.cargo/bin:$PATH"
+fi
+
+# NORMALIZE PATH
+# Source - https://stackoverflow.com/a/78136959
+# # Retrieved 2026-08-04, License - CC BY-SA 4.0
+path_remove ()  { local P=":$PATH:"; P="${P/:$1:/:}"; export PATH="${P:1:-1}"; }
+path_append ()  { path_remove "$1"; export PATH="$PATH:$1"; }
+path_prepend () { path_remove "$1"; export PATH="$1:$PATH"; }
+
+if [ -d /home/linuxbrew/.linuxbrew/bin/ ]; then
+    eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv bash)"
 fi
 
 [[ -f ~/.bash_post_setup.local ]] && . ~/.bash_post_setup.local
