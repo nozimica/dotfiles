@@ -53,7 +53,7 @@ fi
 
 alias listFailedPasswords="sudo zgrep -h 'Failed password' /var/log/auth.* | grep sshd | awk '{print $1,$2}' | sort -k 1,1M -k 2n | uniq -c"
 
-alias GG='git dog -11'
+alias gg='git dog -11'
 
 ## For Terminator
 setWindowTitle() {
