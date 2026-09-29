@@ -6,23 +6,18 @@
 # List of dotfiles
 DOTFILES=(
 # dfiles=(\
-    vimrc            .vimrc
-    vimrc-plug       .vimrc-plug
     tcshrc           .tcshrc
     complete.tcsh    .complete.tcsh
     Xresources       .Xresources
     bashrc           .bashrc
     bash_aliases     .bash_aliases
     gitconfig        .gitconfig
-    tmux.conf        .tmux.conf
-    ghostty.conf     .config/ghostty/config
 )
 
 # List of commands for each file
 declare -A commfiles=(\
     ["Xresources"]="xrdb -merge ~/.Xresources" \
     ["gitconfig"]="gitconfigfunc" \
-    ["vimrc-plug"]="bin/s03_install_vim_plugins.sh" \
 )
 function gitconfigfunc() {
     read -p 'Ingrese su email para git: ' gitemail
@@ -179,9 +174,6 @@ main () {
 
     check_scenario
     install_links
-
-    git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
-    # tmux source ~/.tmux.conf
 }
 
 main
