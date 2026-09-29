@@ -49,6 +49,15 @@ alias freemem='ps -e -orss=,args= | sort -b -k1,1n'
 if [[ $DETECTED_OSTYPE == "linux" ]]; then
     alias cal='cal -m'
     alias gcal='gcal -s 1'
+elif [[ $DETECTED_OSTYPE == "darwin" ]]; then
+    alias more='more -F'
+    alias less='less -F'
+    alias l='ls -lG --color | less -FRX'
+    alias lt='ls -ltG --color | less -FRX'
+    alias lat='ls -latG --color | less -FRX'
+    alias d='ls -lAG --color | less -FRX'
+    alias dl='ls -lAG --group-directories-first --color | less -FRX'
+    alias temperature='sudo powermetrics --samplers smc |grep -i "CPU die temperature"'
 fi
 
 alias listFailedPasswords="sudo zgrep -h 'Failed password' /var/log/auth.* | grep sshd | awk '{print $1,$2}' | sort -k 1,1M -k 2n | uniq -c"

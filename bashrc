@@ -330,10 +330,15 @@ if ! shopt -oq posix; then
     . /etc/bash_completion
   fi
 fi
-if [[ $OSTYPE == 'darwin'* ]]; then
+if [[ $DETECTED_OSTYPE == "linux" ]]; then
+  # Bash autocompletion for Git
+  if [ -f /usr/share/bash-completion/completions/git ]; then
+      source /usr/share/bash-completion/completions/git
+  fi
+elif [[ $DETECTED_OSTYPE == "darwin" ]]; then
   [[ -r "/opt/homebrew/etc/profile.d/bash_completion.sh" ]] && . "/opt/homebrew/etc/profile.d/bash_completion.sh"
+  [[ -r "/opt/homebrew/etc/bash_completion.d/git-completion.bash" ]] && . "/opt/homebrew/etc/bash_completion.d/git-completion.bash"
 fi
-
 
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
 
