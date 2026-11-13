@@ -5,3 +5,5 @@ vim.keymap.set("n", "<leader>Y", '"+Y', { desc = "Yank line to system clipboard"
 -- Buffer navigation
 vim.keymap.set("n", "gb", "<cmd>bnext<CR>", { desc = "Next buffer" })
 vim.keymap.set("n", "gB", "<cmd>bprevious<CR>", { desc = "Previous buffer" })
+vim.keymap.set("n", "<Tab>", "<Cmd>BufferLineCycleNext<CR>", { desc = "Next tab" })
+vim.keymap.set("n", "<S-Tab>", "<Cmd>BufferLineCyclePrev<CR>", { desc = "Previous tab" })
