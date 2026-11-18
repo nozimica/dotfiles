@@ -19,3 +19,4 @@ vim.keymap.set('n', 'g7', function() require('bufferline').go_to(7, true) end, {
 vim.keymap.set('n', 'g8', function() require('bufferline').go_to(8, true) end, { desc = "Go to buffer 8" })
 vim.keymap.set('n', 'g9', function() require('bufferline').go_to(9, true) end, { desc = "Go to buffer 9" })
 vim.keymap.set('n', 'g0', function() require('bufferline').go_to(10, true) end, { desc = "Go to buffer 10" })
+vim.keymap.set("n", "<leader><delete>", function() Snacks.bufdelete() end, { desc = "Close Buffer" })
