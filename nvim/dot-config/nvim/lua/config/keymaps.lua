@@ -1,6 +1,32 @@
--- Copy to macOS clipboard (OSC 52) with <leader>y
-vim.keymap.set({ "n", "v" }, "<leader>y", '"+y', { desc = "Yank to system clipboard" })
-vim.keymap.set("n", "<leader>Y", '"+Y', { desc = "Yank line to system clipboard" })
+-- With these (yanky handles the yank, OSC 52 copies to clipboard):
+vim.keymap.set( "v", "<leader>y", function()
+  vim.cmd("normal! y")  -- yanky captures this
+  local text = vim.fn.getreg('"')
+  vim.fn.setreg("+", text)
+  vim.notify("Copied to clipboard")
+end, { desc = "Yank to system clipboard" })
+
+vim.keymap.set( "n", "<leader>yy", function()
+  vim.cmd("normal! yy")  -- yanky captures this
+  local text = vim.fn.getreg('"')
+  vim.fn.setreg("+", text)
+  vim.notify("Copied to clipboard")
+end, { desc = "Yank line to system clipboard" })
+
+
+-- Yank absolute file path
+vim.keymap.set( "n", "<leader>yf", function()
+  local filepath = vim.fn.expand("%:p")  -- :p = absolute path
+  vim.fn.setreg("+", filepath)
+  vim.notify("Copied: " .. filepath)
+end, { noremap = true, silent = true })
+
+-- Yank absolute directory path
+vim.keymap.set( "n", "<leader>yd", function()
+  local dirpath = vim.fn.expand("%:p:h")  -- :p:h = absolute path's head (dir)
+  vim.fn.setreg("+", dirpath)
+  vim.notify("Copied: " .. dirpath)
+end, { noremap = true, silent = true })
 
 -- Buffer navigation
 vim.keymap.set("n", "gb", "<cmd>bnext<CR>", { desc = "Next buffer" })

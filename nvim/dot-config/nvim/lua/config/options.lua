@@ -1,6 +1,5 @@
 -- Register OSC 52 as the clipboard provider (for + and * registers)
 -- but do NOT set vim.o.clipboard = "unnamedplus"
--- This means only explicit "+y / "+p (or <leader>y / <leader>p) use macOS clipboard
 vim.g.clipboard = {
   name = "OSC 52",
   copy = {
@@ -8,8 +7,12 @@ vim.g.clipboard = {
     ["*"] = require("vim.ui.clipboard.osc52").copy("*"),
   },
   paste = {
-    ["+"] = require("vim.ui.clipboard.osc52").paste("+"),
-    ["*"] = require("vim.ui.clipboard.osc52").paste("*"),
+    ["+"] = function()
+      return vim.fn.getreg("+")
+    end,
+    ["*"] = function()
+      return vim.fn.getreg("*")
+    end,
   },
 }
 
