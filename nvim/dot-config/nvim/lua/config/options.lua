@@ -32,3 +32,5 @@ vim.o.regexpengine = 1
 
 -- Disable LazyVim's format-on-save (the authoritative toggle)
 vim.g.autoformat = false
+
+vim.opt.relativenumber = false
