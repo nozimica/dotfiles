@@ -47,17 +47,16 @@ return {
     { "<leader>bsn", "<Cmd>BufferOrderByBufferNumber<CR>", desc = "Sort buffers by buffer number" },
   },
   opts = {
-    -- Enable/disable animations
     animation = true,
-    -- Auto-hide the tabline when there is only one buffer
     auto_hide = true,
-    -- Clickable tabs
     clickable = true,
-    -- Offset barbar for sidebars like Neo-tree
-    sidebar_filetypes = {
+    sidebar_filetypes = { -- Offset barbar for sidebars like Neo-tree
       ["neo-tree"] = { event = "BufWipeout", text = "Neo-Tree", align = "left" },
     },
-    -- Icon configuration
+    maximum_length = 20,
+    minimum_padding = 0,
+    maximum_padding = 2,
+    hide = { extensions = true },  -- drop ".java"; the devicon already shows the type
     icons = {
       preset = "powerline",
       -- Same glyph on both sides, like tmux-themepack: the preset's highlights
