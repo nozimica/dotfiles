@@ -59,14 +59,13 @@ return {
     },
     -- Icon configuration
     icons = {
-      buffer_index = false,
-      buffer_number = false,
-      diagnostics = {
-        [vim.diagnostic.severity.ERROR] = { enabled = true, icon = " " },
-        [vim.diagnostic.severity.WARN] = { enabled = false },
-        [vim.diagnostic.severity.INFO] = { enabled = false },
-        [vim.diagnostic.severity.HINT] = { enabled = false },
-      },
+      preset = "powerline",
+      -- Same glyph on both sides, like tmux-themepack: the preset's highlights
+      -- color the left one fill-on-tab and the right one tab-on-fill.
+      separator = { left = "\u{e0b0}", right = "\u{e0b0}" },
+      inactive = { separator = { left = "\u{e0b0}", right = "\u{e0b0}" } },
+      separator_at_end = false,
+      filetype = { custom_colors = true }
     },
   },
 }
